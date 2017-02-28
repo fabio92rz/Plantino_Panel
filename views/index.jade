@@ -108,15 +108,15 @@ html(lang='en')
           h3 Register
         .space
         .row
-          form#register
+          form(action='register', method='post')
             .form-group
-              input#inputName.form-control(type='email', placeholder='Enter Name')
+              input#inputName.form-control(type='email', placeholder='Enter Name', name='userName')
             .form-group
-              input#inputEmail.form-control(type='email', placeholder='Enter Email')
+              input#inputEmail.form-control(type='email', placeholder='Enter Email', name='userMail')
             .form-group
-              input#inputPassword.form-control(type='password', placeholder='Enter Password')
+              input#inputPassword.form-control(type='password', placeholder='Enter Password', name='userPass1')
             .form-group
-              input#inputPassword1.form-control(type='password', placeholder='Re Enter Password')
+              input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', name='userPass2')
             button.btn.btn-primary.my-btn.dark(type='submit') Register
         .space
     nav#tf-footer
