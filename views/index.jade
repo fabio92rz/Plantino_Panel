@@ -1,0 +1,152 @@
+doctype html
+html(lang='en')
+  head
+    //
+      Basic Page Needs
+      ==================================================
+    meta(charset='utf-8')
+    //if IE
+      meta(http-equiv='x-ua-compatible', content='IE=9')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title | Plantino - Web Panel
+    meta(name='description', content='Your Description Here')
+    meta(name='keywords', content='plants, arduino')
+    meta(name='author', content='Fabio Rizzo')
+    //
+      Favicons
+      ==================================================
+    link(rel='shortcut icon', href='img/favicon.ico', type='image/x-icon')
+    link(rel='apple-touch-icon', href='img/apple-touch-icon.png')
+    link(rel='apple-touch-icon', sizes='72x72', href='img/apple-touch-icon-72x72.png')
+    link(rel='apple-touch-icon', sizes='114x114', href='img/apple-touch-icon-114x114.png')
+    // Bootstrap
+    link(rel='stylesheet', type='text/css', href='stylesheets/bootstrap.css')
+    //link(rel='stylesheet', type='text/css', href='fonts/font-awesome/css/font-awesome.css')
+    //
+      Stylesheet
+      ==================================================
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+    link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
+    script(type='text/javascript', src='javascripts/modernizr.custom.js')
+    //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
+    //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+
+  body
+    #tf-home
+      .overlay
+        #sticky-anchor
+        nav#tf-menu.navbar.navbar-default
+          .container
+            // Brand and toggle get grouped for better mobile display
+            .navbar-header
+              button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.navbar-brand.logo(href='http://10.1.1.136:1024/') Plantino
+
+            // Collect the nav links, forms, and other content for toggling
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a(href='#tf-home') Home
+                li
+                  a(href='#tf-service') Services
+                li
+                  a(href='#tf-about') About
+            // /.navbar-collapse
+          // /.container-fluid
+        .container
+          .content
+            h1 Grow up your lovely plant
+            h3 in a way that you have never seen before.
+            br
+            a.btn.btn-primary.my-btn(href='#tf-login') Login
+            a.btn.btn-primary.my-btn2(href='#tf-register') Register
+    #tf-service
+      .container
+        .col-md-4
+          .media
+            .media-left.media-middle
+              i.fa.fa-motorcycle
+            .media-body
+              h4.media-heading Brand & Graphics Design
+              p
+                | Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        .col-md-4
+          .media
+            .media-left.media-middle
+              i.fa.fa-gears
+            .media-body
+              h4.media-heading Web Designer & Developer
+              p
+                | Cras sit amet nibh libero, in gravida nulla. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        .col-md-4
+          .media
+            .media-left.media-middle
+              i.fa.fa-heartbeat
+            .media-body
+              h4.media-heading Business Consultant
+              p
+                | Metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+    #tf-about
+      .overlay
+        .container
+          .row
+            h3 About Plantino
+            br
+            p
+              | Cras sit amet nibh libero, in gravida nulla. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            p
+              | Metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            br
+    #tf-register
+      br
+      .container
+        .row
+          h3 Register
+        .space
+        .row
+          form#register
+            .form-group
+              input#inputName.form-control(type='email', placeholder='Enter Name')
+            .form-group
+              input#inputEmail.form-control(type='email', placeholder='Enter Email')
+            .form-group
+              input#inputPassword.form-control(type='password', placeholder='Enter Password')
+            .form-group
+              input#inputPassword1.form-control(type='password', placeholder='Re Enter Password')
+            button.btn.btn-primary.my-btn.dark(type='submit') Register
+        .space
+    nav#tf-footer
+      .container
+        .pull-left
+          p
+            | 2017 © Plantino. All Rights Reserved.
+            a(href='https://github.com/fabio92rz')  Fabio Rizzo
+        .pull-right
+          ul.social-media.list-inline
+            li
+              a(href='#')
+                span.fa.fa-facebook
+            li
+              a(href='#')
+                span.fa.fa-twitter
+            li
+              a(href='#')
+                span.fa.fa-pinterest
+            li
+              a(href='#')
+                span.fa.fa-google-plus
+            li
+              a(href='#')
+                span.fa.fa-dribbble
+            li
+              a(href='#')
+                span.fa.fa-behance
+
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(type='text/javascript', src='javascripts/jquery.1.11.1.js')
+    script(type='text/javascript', src='javascripts/bootstrap.js')
+    script(type='text/javascript', src='javascripts/main.js')
