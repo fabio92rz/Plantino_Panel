@@ -4,16 +4,12 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 //var User = require('../models/user.model');
-var sqlite3 = require('sqlite3');
+var dblite = require('dblite');
 
-var db = new sqlite3.Database('/opt/plantinoServer/plantino_record.db');
+//var db = new sqlite3.Database('/opt/plantinoServer/plantino_record.db');
+db = dblite('/opt/plantinoServer/plantino_record.db');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Plantino' });
-});
-
-router.post('/index', function (req, res) {
+router.post('index', function (req, res) {
     var name = req.body.userName;
     var mail = req.body.userMail;
     var password = req.body.userPass1;
@@ -33,11 +29,17 @@ router.post('/index', function (req, res) {
         });
     }else {
 
-        var stmt = db.prepare("INSERT INTO user (name, mail, password) VALUES (?,?,?)");
-                        stmt.run([name, mail, password]).finalize();
-
+        //var stmt = db.query("INSERT INTO user (name, mail, password) VALUES (?,?,?)");
+                        //stmt.run([name, mail, password]).finalize();
+        db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name], [mail], [password]);
         req.flash('success msg', 'Ti sei registrato ed ora puoi effettuare il login');
+        res.redirect('/')
     }
+});
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Plantino' });
 });
 
 module.exports = router;
