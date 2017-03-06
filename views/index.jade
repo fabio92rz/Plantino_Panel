@@ -44,7 +44,7 @@ html(lang='en')
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-              a.navbar-brand.logo(href='http://10.1.1.136:1024/') Plantino
+              a.navbar-brand.logo(href='http://10.1.1.139:1024/') Plantino
 
             // Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -63,7 +63,7 @@ html(lang='en')
             h3 in a way that you have never seen before.
             br
             a.btn.btn-primary.my-btn(href='#tf-login') Login
-            a.btn.btn-primary.my-btn2(href='#tf-register') Register
+            a.btn.btn-primary.my-btn2(href='register') Register
     #tf-service
       .container
         .col-md-4
@@ -101,24 +101,6 @@ html(lang='en')
             p
               | Metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
             br
-    #tf-register
-      br
-      .container
-        .row
-          h3 Register
-        .space
-        .row
-            .form-group
-              input#inputName.form-control(type='email', placeholder='Enter Name', name='userName')
-            .form-group
-              input#inputEmail.form-control(type='email', placeholder='Enter Email', name='userMail')
-            .form-group
-              input#inputPassword.form-control(type='password', placeholder='Enter Password', name='userPass1')
-            .form-group
-              input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', name='userPass2')
-            button.btn.btn-primary.my-btn.dark(type='submit') Register
-          form( method='post')
-        .space
     nav#tf-footer
       .container
         .pull-left

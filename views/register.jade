@@ -1,0 +1,59 @@
+//
+   Created by Fabio on 06/03/2017.
+
+doctype html
+html(lang='en')
+    head
+        //
+          Basic Page Needs
+          ==================================================
+        meta(charset='utf-8')
+        //if IE
+          meta(http-equiv='x-ua-compatible', content='IE=9')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title | Plantino - Register
+        meta(name='description', content='Your Description Here')
+        meta(name='keywords', content='plants, arduino')
+        meta(name='author', content='Fabio Rizzo')
+        //
+          Favicons
+          ==================================================
+        link(rel='shortcut icon', href='img/favicon.ico', type='image/x-icon')
+        link(rel='apple-touch-icon', href='img/apple-touch-icon.png')
+        link(rel='apple-touch-icon', sizes='72x72', href='img/apple-touch-icon-72x72.png')
+        link(rel='apple-touch-icon', sizes='114x114', href='img/apple-touch-icon-114x114.png')
+        // Bootstrap
+        link(rel='stylesheet', type='text/css', href='stylesheets/bootstrap.css')
+        //link(rel='stylesheet', type='text/css', href='fonts/font-awesome/css/font-awesome.css')
+        //
+          Stylesheet
+          ==================================================
+        link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+        link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
+        script(type='text/javascript', src='javascripts/modernizr.custom.js')
+        script(src='javascripts/sweetalert.min.js')
+        link(rel='stylesheet', href='stylesheets/sweetalert.css')
+        //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
+        //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+    body
+        .col-sm-6
+            .col-offset-3
+                    br
+                    .overlay
+                        .container
+                            .row
+                                h3 Register
+                            .space
+                            .row
+                                form( method='post', action='register')
+                                    .form-group
+                                        input#inputName.form-control(type='name', placeholder='Enter Name', name='registerName')
+                                    .form-group
+                                        input#inputEmail.form-control(type='email', placeholder='Enter Email', name='registerMail')
+                                    .form-group
+                                        input#inputPassword.form-control(type='password', placeholder='Enter Password', name='registerPass1')
+                                    .form-group
+                                        input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', name='registerPass2')
+
+                                        button.btn.btn-primary.my-btn.dark(type='submit') Register
+                            .space
