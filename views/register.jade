@@ -4,6 +4,8 @@
 doctype html
 html(lang='en')
     head
+        script(src='javascripts/sweetalert.min.js')
+        link(rel='stylesheet', href='stylesheets/sweetalert.css')
         //
           Basic Page Needs
           ==================================================
@@ -31,29 +33,58 @@ html(lang='en')
         link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
         link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
-        script(src='javascripts/sweetalert.min.js')
-        link(rel='stylesheet', href='stylesheets/sweetalert.css')
         //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
         //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
-    body
-        .col-sm-6
-            .col-offset-3
-                    br
-                    .overlay
-                        .container
+        body
+        #tf-home
+            #sticky-anchor
+                nav
+                #tf-menu.navbar.navbar-default
+                    .container
+                        .navbar-header
+                            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                                span.sr-only Toggle navigation
+                                span.icon-bar
+                                span.icon-bar
+                                span.icon-bar
+                            a.navbar-brand.logo(href='http://10.1.1.139:1024/') Plantino
+                .container
+                    .row
+                    h3 Register
+                        .space
                             .row
-                                h3 Register
-                            .space
-                            .row
-                                form( method='post', action='register')
-                                    .form-group
-                                        input#inputName.form-control(type='name', placeholder='Enter Name', name='registerName')
-                                    .form-group
-                                        input#inputEmail.form-control(type='email', placeholder='Enter Email', name='registerMail')
-                                    .form-group
-                                        input#inputPassword.form-control(type='password', placeholder='Enter Password', name='registerPass1')
-                                    .form-group
-                                        input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', name='registerPass2')
+                            form( method='post', action='register', name='registerForm')
+                                .form-group
+                                    input#inputName.form-control(type='name', placeholder='Enter Name', id='registerName')
+                                .form-group
+                                    input#inputEmail.form-control(type='email', placeholder='Enter Email', id='registerMail')
+                                .form-group
+                                    input#inputPassword.form-control(type='password', placeholder='Enter Password', id='registerPass1')
+                                .form-group
+                                    input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', id='registerPass2')
 
-                                        button.btn.btn-primary.my-btn.dark(type='submit') Register
+                                 button.btn.btn-primary.my-btn.dark(type='submit', onclick="mRegister") Register
+
+                                 if (success='success')
+                                     script.
+                                         sweetAlert("Congratulazioni, ora puoi effettuare il login!");
+                                 else
+                                     script.
+                                         sweetAlert("Qualcosa è andato storto...");
                             .space
+    script.
+        function mRegister() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://localhost:1024/register", true);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("registerName");
+                    document.getElementById("registerMail");
+                    document.getElementById("registerPass1");
+                    document.getElementById("registerPass2");
+                }
+            };
+            xmlhttp.send();
+        }
+
+

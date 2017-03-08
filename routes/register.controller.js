@@ -6,7 +6,6 @@ var router = express.Router();
 var passport = require('passport-local');
 var flash = require('connect-flash');
 var LocalStrategy = require('passport-local').Strategy;
-var sweetAlert = require('sweetalert');
 
 //var User = require('../models/user.model');
 var dblite = require('dblite');
@@ -30,7 +29,7 @@ router.post('/', function (req, res) {
     }else{
 
         db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
-        res.redirect('register', sweetAlert("Grande!", "Registrazione effettuata.", "success"));
+        res.render('register', {success: "success"})
     }
 });
 
