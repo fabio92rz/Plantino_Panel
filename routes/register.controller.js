@@ -3,9 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var passport = require('passport-local');
-var flash = require('connect-flash');
-var LocalStrategy = require('passport-local').Strategy;
+var url = require('url');
 
 //var User = require('../models/user.model');
 var dblite = require('dblite');
@@ -16,21 +14,29 @@ router.get('/', function (req, res, next) {
     res.render('register');
 });
 
+
 router.post('/', function (req, res) {
-    var name = req.body.registerName;
-    var mail = req.body.registerMail;
-    var password = req.body.registerPass1;
-    var password2 = req.body.registerPass2;
 
-    if (password!=password2){
-        res.render('register', {
-            errors:errors
-        });
-    }else{
+        console.log("richiesta ricevuta");
 
-        db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
-        res.render('register', {success: "success"})
-    }
+        var name = req.body.registerName;
+        var mail = req.body.registerMail;
+        var password = req.body.registerPass1;
+        var password2 = req.body.registerPass2;
+
+        if (password!=password2){
+            res.render('register', {
+                errors:errors
+            });
+        }else{
+
+            db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
+
+            var status = "success";
+            res.writeHead(200, {"Content-Type": "text/plain"});
+            res.end(status);
+            return res.send();
+        }
 });
 
 module.exports = router;

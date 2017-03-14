@@ -5,6 +5,24 @@ doctype html
 html(lang='en')
     head
         script(src='javascripts/sweetalert.min.js')
+        script.
+            function mRegister() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open('POST', "http://localhost:1024/register", true);
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var status = xmlhttp.responseText;
+
+                        if (status == 'success'){
+                            sweetAlert("Congratulazioni, ora puoi effettuare il login!");
+                        }else {
+                            sweetAlert("Oops, qualcosa è andato storto...");
+                        }
+                    }
+                };
+                xmlhttp.send();
+            }
+
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
         //
           Basic Page Needs
@@ -53,38 +71,15 @@ html(lang='en')
                     h3 Register
                         .space
                             .row
-                            form( method='post', action='register', name='registerForm')
+                            form(method='post', action='register', name='registerForm')
                                 .form-group
-                                    input#inputName.form-control(type='name', placeholder='Enter Name', id='registerName')
+                                    input.form-control(id='userName', type='name', placeholder='Enter Name', name='registerName')
                                 .form-group
-                                    input#inputEmail.form-control(type='email', placeholder='Enter Email', id='registerMail')
+                                    input.form-control(id='userMail', type='email', placeholder='Enter Email', name='registerMail')
                                 .form-group
-                                    input#inputPassword.form-control(type='password', placeholder='Enter Password', id='registerPass1')
+                                    input.form-control(id='userPass1', type='password', placeholder='Enter Password', name='registerPass1')
                                 .form-group
-                                    input#inputPassword1.form-control(type='password', placeholder='Re Enter Password', id='registerPass2')
+                                    input.form-control(id='userPass2', type='password', placeholder='Re Enter Password', name='registerPass2')
 
                                  button.btn.btn-primary.my-btn.dark(type='submit', onclick="mRegister") Register
-
-                                 if (success='success')
-                                     script.
-                                         sweetAlert("Congratulazioni, ora puoi effettuare il login!");
-                                 else
-                                     script.
-                                         sweetAlert("Qualcosa è andato storto...");
                             .space
-    script.
-        function mRegister() {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("POST", "http://localhost:1024/register", true);
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById("registerName");
-                    document.getElementById("registerMail");
-                    document.getElementById("registerPass1");
-                    document.getElementById("registerPass2");
-                }
-            };
-            xmlhttp.send();
-        }
-
-
