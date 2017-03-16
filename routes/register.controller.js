@@ -23,20 +23,26 @@ router.post('/', function (req, res) {
         var mail = req.body.registerMail;
         var password = req.body.registerPass1;
         var password2 = req.body.registerPass2;
+        var state = "";
 
         if (password!=password2){
-            res.render('register', {
-                errors:errors
-            });
+            state = "failed";
         }else{
-
             db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
-
-            var status = "success";
-            res.writeHead(200, {"Content-Type": "text/plain"});
-            res.end(status);
-            return res.send();
+            state = "success";
         }
+
+        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+        var xhr = new XMLHttpRequest;
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200){
+                document.getElementsByTagName(state).innerhtml = xhr.responseText;
+            }
+
+            xhr.open("GET", "http://localhost:1024/register", true);
+            xhr.send();
+        };
+
 });
 
 module.exports = router;

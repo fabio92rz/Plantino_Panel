@@ -5,24 +5,6 @@ doctype html
 html(lang='en')
     head
         script(src='javascripts/sweetalert.min.js')
-        script.
-            function mRegister() {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open('POST', "http://localhost:1024/register", true);
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        var status = xmlhttp.responseText;
-
-                        if (status == 'success'){
-                            sweetAlert("Congratulazioni, ora puoi effettuare il login!");
-                        }else {
-                            sweetAlert("Oops, qualcosa è andato storto...");
-                        }
-                    }
-                };
-                xmlhttp.send();
-            }
-
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
         //
           Basic Page Needs
@@ -83,3 +65,22 @@ html(lang='en')
 
                                  button.btn.btn-primary.my-btn.dark(type='submit', onclick="mRegister") Register
                             .space
+
+        script.
+            function mRegister() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                        var status = xmlhttp.responseText;
+
+                        if (status == "success"){
+                            sweetAlert("Congratulazioni, ora puoi eseguire il login!");
+                        }else {
+                            sweetAlert("Oops, qualcosa è andato storto..");
+                        }
+                    }
+                };
+                xmlhttp.open('GET', "http://localhost:1024/register", true);
+                xmlhttp.send();
+            }
