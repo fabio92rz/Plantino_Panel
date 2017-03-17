@@ -136,3 +136,14 @@ html(lang='en')
     script(type='text/javascript', src='javascripts/main.js')
     script(src='javascripts/sweetalert.min.js')
     link(rel='stylesheet', href='stylesheets/sweetalert.css')
+    script.
+        var status = !{data};
+
+        if (status == "success") {
+
+            sweetAlert("Congratulazioni, ora puoi effettuare il login!");
+
+        } else {
+
+            sweetAlert("Oops, qualcosa è andato storto..");
+        }

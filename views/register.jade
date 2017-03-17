@@ -47,7 +47,7 @@ html(lang='en')
                                 span.icon-bar
                                 span.icon-bar
                                 span.icon-bar
-                            a.navbar-brand.logo(href='http://10.1.1.139:1024/') Plantino
+                            a.navbar-brand.logo(href='http://10.1.1.140:1024/') Plantino
                 .container
                     .row
                     h3 Register
@@ -63,24 +63,57 @@ html(lang='en')
                                 .form-group
                                     input.form-control(id='userPass2', type='password', placeholder='Re Enter Password', name='registerPass2')
 
-                                 button.btn.btn-primary.my-btn.dark(type='submit', onclick="mRegister") Register
-                            .space
+                                button.btn.btn-primary.my-btn.dark(type='submit') Register
 
-        script.
-            function mRegister() {
+        //script.
+            /**function mRegister() {
                 var xmlhttp = new XMLHttpRequest();
+                var status = "";
+                xmlhttp.open('POST', "http://localhost:1024/register", true);
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
-                        var status = xmlhttp.responseText;
+                        status = xmlhttp.responseText;
 
                         if (status == "success"){
-                            sweetAlert("Congratulazioni, ora puoi eseguire il login!");
+                            sweetAlert("Congratulazioni, ora puoi effettuare il login");
                         }else {
-                            sweetAlert("Oops, qualcosa è andato storto..");
+                            sweetAlert("Oops, qualcosa è andato storto...");
                         }
                     }
                 };
-                xmlhttp.open('GET', "http://localhost:1024/register", true);
                 xmlhttp.send();
-            }
+            }**/
+
+            /**function mRegister() {
+                var xmlhttp = new XMLHttpRequest();
+
+                var name = document.getElementById("userName").innerHTML;
+                var mail = document.getElementById("userMail").innerHTML;
+                var pass = document.getElementById("userPass1").innerHTML;
+                var mPass = document.getElementById("userPass2").innerHTML;
+
+                xmlhttp.open('POST', "http://localhost:1024/register", true);
+
+                var user = {name: name, mail: mail, pass: pass, mPass: mPass};
+                var data = JSON.stringify(user);
+
+                xmlhttp.setRequestHeader("Content-type", "views/register");
+                xmlhttp.setRequestHeader("Content-length", data.length);
+                xmlhttp.setRequestHeader("Connection", "close");
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                        if (xmlhttp.responseText == "success") {
+
+                            sweetAlert("Congratulazioni, ora puoi effettuare il login!");
+
+                        } else {
+
+                            sweetAlert("Oops, qualcosa è andato storto...");
+                        }
+                    }
+                };
+                xmlhttp.send(data);
+            }**/

@@ -14,6 +14,19 @@ router.get('/', function (req, res, next) {
     res.render('register');
 });
 
+/**var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var xhr = new XMLHttpRequest;
+
+xhr.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200){
+        document.getElementsByTagName(state).innerhtml = xhr.responseText;
+    }
+
+    xhr.open("POST", "http://localhost:1024/register", true);
+    xhr.send();
+
+};**/
+
 
 router.post('/', function (req, res) {
 
@@ -23,26 +36,26 @@ router.post('/', function (req, res) {
         var mail = req.body.registerMail;
         var password = req.body.registerPass1;
         var password2 = req.body.registerPass2;
+        var registeredUser;
         var state = "";
 
-        if (password!=password2){
-            state = "failed";
-        }else{
-            db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
-            state = "success";
-        }
+        db.query("SELECT * FROM user where mail = ?",[mail], function (err, rows) {
+            registeredUser = rows[0];
+            console.log(registeredUser);
 
-        var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-        var xhr = new XMLHttpRequest;
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200){
-                document.getElementsByTagName(state).innerhtml = xhr.responseText;
+            if (registeredUser || registeredUser==false || password!=password2 ){
+
+                state = "failed";
+                res.render('index', {data: JSON.stringify(state)});
+
+            }else {
+
+                db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
+                state = "success";
+                res.render('index', {data: JSON.stringify(state)});
             }
 
-            xhr.open("GET", "http://localhost:1024/register", true);
-            xhr.send();
-        };
-
+        });
 });
 
 module.exports = router;
