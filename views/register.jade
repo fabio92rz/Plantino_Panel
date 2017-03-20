@@ -33,37 +33,32 @@ html(lang='en')
         link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
         link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
-        //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
-        //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+
         body
-        #tf-home
-            #sticky-anchor
-                nav
-                #tf-menu.navbar.navbar-default
-                    .container
-                        .navbar-header
-                            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            a.navbar-brand.logo(href='http://10.1.1.140:1024/') Plantino
+            #tf-home
+                #sticky-anchor
+                    #tf-menu.navbar.navbar-default
+                        .container
+                            .navbar-header
+                                a.navbar-brand.logo(href='http://10.1.1.140:1024/') Plantino
+             #tf-register
                 .container
                     .row
-                    h3 Register
                         .space
-                            .row
-                            form(method='post', action='register', name='registerForm')
-                                .form-group
-                                    input.form-control(id='userName', type='name', placeholder='Enter Name', name='registerName')
-                                .form-group
-                                    input.form-control(id='userMail', type='email', placeholder='Enter Email', name='registerMail')
-                                .form-group
-                                    input.form-control(id='userPass1', type='password', placeholder='Enter Password', name='registerPass1')
-                                .form-group
-                                    input.form-control(id='userPass2', type='password', placeholder='Re Enter Password', name='registerPass2')
+                            #registerSection
+                                h3 Registrazione
+                                    .row
+                                        form(class='#register', method='post', action='register', name='register')
+                                            .form-group
+                                            input.form-control(id='userName', type='name', placeholder='Enter Name', name='registerName')
+                                        .form-group
+                                            input.form-control(id='userMail', type='email', placeholder='Enter Email', name='registerMail')
+                                        .form-group
+                                            input.form-control(id='userPass1', type='password', placeholder='Enter Password', name='registerPass1')
+                                        .form-group
+                                            input.form-control(id='userPass2', type='password', placeholder='Re Enter Password', name='registerPass2')
 
-                                button.btn.btn-primary.my-btn.dark(type='submit') Register
+                                        button.btn.btn-primary.my-btn.dark(type='submit') Register
 
         //script.
             /**function mRegister() {

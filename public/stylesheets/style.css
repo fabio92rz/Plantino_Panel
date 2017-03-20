@@ -260,12 +260,15 @@ ul.why-me li{
   text-align: center;
 }
 
-form#register {
-  outline: 6px solid rgba(34, 34, 34, 0.08);
+form{
+  outline: rgba(34, 34, 34, 0.08);
+  padding: 20px;
+  margin: 70px;
+
 }
 
 #tf-register input.form-control {
-  height: 40px;
+  height: 10px;
 }
 
 #tf-register .form-control{
@@ -296,4 +299,12 @@ nav#tf-footer {
   background: #222222;
   padding: 3% 0 2% 0;
   color: #f1f1f1;
+}
+
+#registerSection {
+  height: 90%;
+  width:100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
