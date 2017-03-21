@@ -13,7 +13,7 @@ html(lang='en')
         //if IE
           meta(http-equiv='x-ua-compatible', content='IE=9')
         meta(name='viewport', content='width=device-width, initial-scale=1')
-        title | Plantino - Register
+        title | Plantino - Login
         meta(name='description', content='Your Description Here')
         meta(name='keywords', content='plants, arduino')
         meta(name='author', content='Fabio Rizzo')
@@ -44,21 +44,16 @@ html(lang='en')
                 .row
                 #tf-register
                     #registerSection
-                        h3 Register
+                        h3 Login
                             .space
                                 .row
-                                form(method='post', action='register', name='registerForm')
-                                    .form-group
-                                        input.form-control(id='userName', type='name', placeholder='Enter Name', name='registerName')
+                                form(method='post', action='login', name='loginForm')
                                     .form-group
                                         input.form-control(id='userMail', type='email', placeholder='Enter Email', name='registerMail')
                                     .form-group
                                         input.form-control(id='userPass1', type='password', placeholder='Enter Password', name='registerPass1')
-                                    .form-group
-                                        input.form-control(id='userPass2', type='password', placeholder='Re Enter Password', name='registerPass2')
 
-                                    button.btn.btn-primary.my-btn.dark(type='submit') Register
-
+                                    button.btn.btn-primary.my-btn.dark(type='submit') Login
         //script.
             /**function mRegister() {
                 var xmlhttp = new XMLHttpRequest();
@@ -110,4 +105,5 @@ html(lang='en')
                     }
                 };
                 xmlhttp.send(data);
-            }**/
+            }**///
+

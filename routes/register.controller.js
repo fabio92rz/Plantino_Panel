@@ -41,7 +41,6 @@ router.post('/', function (req, res) {
 
         db.query("SELECT * FROM user where mail = ?",[mail], function (err, rows) {
             registeredUser = rows[0];
-            console.log(registeredUser);
 
             if (registeredUser || registeredUser==false || password!=password2 ){
 

@@ -9,9 +9,8 @@ var user = {
         password: String
     };
 
-user.methods.validPassword = function (password) {
-    return compare(password, this.local.password);
-    
-};
+function getName() {
+    user.name = this;
+}
 
 module.exports = user;
