@@ -42,10 +42,10 @@ router.post('/', function (req, res) {
         db.query("SELECT * FROM user where mail = ?",[mail], function (err, rows) {
             registeredUser = rows[0];
 
-            if (registeredUser || registeredUser==false || password!=password2 ){
+            if (registeredUser || registeredUser===false || password!==password2 ){
 
                 state = "failed";
-                res.render('index', {data: JSON.stringify(state)});
+                res.render('register', {data: JSON.stringify(state)});
 
             }else {
 

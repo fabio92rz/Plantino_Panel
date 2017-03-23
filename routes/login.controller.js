@@ -19,25 +19,38 @@ router.post('/', function (req, res) {
 
     console.log("richiesta ricevuta");
 
-    var mail = req.body.registerMail;
-    var password = req.body.registerPass1;
-    var userMail;
-    var userPass;
+    var loginMail = req.body.registerMail;
+    var loginPassword = req.body.registerPass1;
+    var user;
     var state = "";
 
-    db.query("SELECT * FROM user where mail = ? and password = ?",[mail, password], ['id', 'name', 'mail', 'password'], function (err, rows) {
-        userMail = rows[0];
-        console.log(db.query("SELECT * FROM user where mail = ? and password = ?",[mail, password], ['id', 'name', 'mail', 'password']));
+    db.query("SELECT * FROM user where mail = ? and password = ?",[loginMail, loginPassword], ['id', 'name', 'mail', 'password'], function (err, rows) {
 
-        if (userMail === true){
+        user = JSON.stringify(rows.length && rows[0]);
+        var userContent = JSON.parse(user);
 
-            state = "failed";
-            res.render('index', {data: JSON.stringify(state)});
+        var userId = userContent.id;
+        var userName = userContent.name;
+        var userMail = userContent.mail;
+        var userPass = userContent.password;
+
+        console.log("Username", userName);
+        console.log("Usermail", userMail);
+        console.log("Userpass", userPass);
+        console.log("Useris", userId);
+
+
+        //console.log(db.query("SELECT * FROM user where mail = ? and password = ?",[mail, password], ['id', 'name', 'mail', 'password']));
+
+        if (userMail === loginMail && userPass === loginPassword){
+
+            state = "success";
+            res.render('home', {data: JSON.stringify(state)});
 
         }else {
 
-            state = "success";
-            res.render('index', {data: JSON.stringify(state)});
+            state = "failed";
+            res.render('login', {data: JSON.stringify(state)});
         }
 
     });

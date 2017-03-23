@@ -9,8 +9,6 @@ var user = {
         password: String
     };
 
-function getName() {
-    user.name = this;
-}
+
 
 module.exports = user;
