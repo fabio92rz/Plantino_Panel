@@ -33,8 +33,9 @@ p{
 }
 
 a {
-  color: #ffffff;
+  color: #000000;
   transition: all 0.8;
+  font-size: 13px;
 }
 a:hover,
 a:focus{
@@ -272,7 +273,7 @@ form{
 
 #tf-register .form-control{
   display: block;
-  width: 200%;
+  width: 150%;
   margin-bottom: 20px;
   padding: 16px;
   font-size: 14px;

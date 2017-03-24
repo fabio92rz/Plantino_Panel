@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var url = require('url');
+var bcrypt = require('bcrypt-nodejs');
 
 //var User = require('../models/user.model');
 var dblite = require('dblite');
