@@ -2,6 +2,7 @@
  * Created by Fabio on 06/03/2017.
  */
 var express = require('express');
+var async = require('async');
 var router = express.Router();
 var url = require('url');
 var bcrypt = require('bcrypt-nodejs');
@@ -28,7 +29,6 @@ router.get('/', function (req, res, next) {
 
 };**/
 
-
 router.post('/', function (req, res) {
 
     console.log("richiesta ricevuta");
@@ -51,14 +51,16 @@ router.post('/', function (req, res) {
 
         } else {
 
-
             db.query("INSERT INTO user (name, mail, password) VALUES (?, ?, ?)", [name, mail, password]);
             state = "success";
             res.render('index', {data: JSON.stringify(state)});
+
+
         }
 
     });
 });
+
 
 module.exports = router;
 
