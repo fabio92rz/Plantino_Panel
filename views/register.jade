@@ -35,6 +35,8 @@ html(lang='en')
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
         //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
         //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+        script.
+            var ip = location.host;
         body
             #tf-home
                 #sticky-anchor
@@ -47,7 +49,9 @@ html(lang='en')
                                     span.icon-bar
                                     span.icon-bar
                                     span.icon-bar
-                                a.navbar-brand(href='http://10.1.1.140:1024/') Plantino
+                                a.navbar-brand(href="", id="register") Plantino
+                                    script.
+                                        document.getElementById("register").href = "http://" + ip;
 
             #tf-register
                 #registerSection
@@ -66,8 +70,37 @@ html(lang='en')
 
                                 button.btn.btn-primary.my-btn.dark(type='submit') Register
 
-                            a(href='http://10.1.1.136:1024/login') Se hai già un account, esegui il login qui.
+                            a(href='', id="login") Se hai già un account, esegui il login qui.
+                            script.
+                                document.getElementById("login").href = "http://" + ip + "/login";
 
+            nav#tf-footer
+                .container
+                    .pull-left
+                        p
+                            | 2017 © Plantino. All Rights Reserved.
+                            a(href='https://github.com/fabio92rz')
+                                font(color='#ffffff')   Fabio Rizzo
+                    .pull-right
+                        ul.social-media.list-inline
+                            li
+                                a(href='#')
+                                    span.fa.fa-facebook
+                            li
+                                a(href='#')
+                                    span.fa.fa-twitter
+                            li
+                                a(href='#')
+                                    span.fa.fa-pinterest
+                            li
+                                a(href='#')
+                                    span.fa.fa-google-plus
+                            li
+                                a(href='#')
+                                    span.fa.fa-dribbble
+                            li
+                                a(href='#')
+                                    span.fa.fa-behance
         script.
             var status = !{data};
 

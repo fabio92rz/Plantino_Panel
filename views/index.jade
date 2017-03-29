@@ -30,8 +30,8 @@ html(lang='en')
     script(type='text/javascript', src='javascripts/modernizr.custom.js')
     //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
     //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
-
-
+    script.
+      var ip = location.host;
 
   body
     #tf-home
@@ -46,7 +46,9 @@ html(lang='en')
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-              a.navbar-brand(href='http://10.1.1.140:1024/') Plantino
+              a.navbar-brand(href="" id="index") Plantino
+                script.
+                  document.getElementById("index").href = "http://" + ip;
 
             // Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -107,8 +109,9 @@ html(lang='en')
       .container
         .pull-left
           p
-            | 2017 © Plantino. All Rights Reserved.
-            a(href='https://github.com/fabio92rz')  Fabio Rizzo
+              | 2017 © Plantino. All Rights Reserved.
+              a(href='https://github.com/fabio92rz')
+                  font(color='#ffffff')   Fabio Rizzo
         .pull-right
           ul.social-media.list-inline
             li
@@ -136,6 +139,7 @@ html(lang='en')
     script(type='text/javascript', src='javascripts/main.js')
     script(src='javascripts/sweetalert.min.js')
     link(rel='stylesheet', href='stylesheets/sweetalert.css')
+
     script.
         var status = !{data};
 
@@ -143,3 +147,4 @@ html(lang='en')
 
             sweetAlert("Congratulazioni", "ora puoi effettuare il login!", "success");
         }
+

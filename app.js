@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var register = require('./routes/register.controller');
 var login = require('./routes/login.controller');
+var home = require('./routes/home.controller');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/register', register);
 app.use('/login', login);
+app.use('/home', home);
 app.use(flash());
 
 // catch 404 and forward to error handler

@@ -1,0 +1,106 @@
+doctype html
+html(lang='en')
+    head
+        //
+          Basic Page Needs
+          ==================================================
+        meta(charset='utf-8')
+        //if IE
+          meta(http-equiv='x-ua-compatible', content='IE=9')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title | Plantino - Web Panel
+        meta(name='description', content='Your Description Here')
+        meta(name='keywords', content='plants, arduino')
+        meta(name='author', content='Fabio Rizzo')
+        //
+          Favicons
+          ==================================================
+        link(rel='shortcut icon', href='img/favicon.ico', type='image/x-icon')
+        link(rel='apple-touch-icon', href='img/apple-touch-icon.png')
+        link(rel='apple-touch-icon', sizes='72x72', href='img/apple-touch-icon-72x72.png')
+        link(rel='apple-touch-icon', sizes='114x114', href='img/apple-touch-icon-114x114.png')
+        // Bootstrap
+        link(rel='stylesheet', type='text/css', href='stylesheets/bootstrap.css')
+        //link(rel='stylesheet', type='text/css', href='fonts/font-awesome/css/font-awesome.css')
+        //
+          Stylesheet
+          ==================================================
+        link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+        link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
+        script(type='text/javascript', src='javascripts/modernizr.custom.js')
+        //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
+        //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+        script.
+            var ip = location.host;
+
+    body
+        #tf-home
+            #sticky-anchor
+            nav#tf-menu.navbar.navbar-default
+                .container
+                    // Brand and toggle get grouped for better mobile display
+                    .navbar-header
+                        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href="" id="index") Plantino
+                            script.
+                                document.getElementById("index").href = "http://" + ip + "/home";
+
+                    // Collect the nav links, forms, and other content for toggling
+                    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href='#tf-home') Home
+                            li
+                                a(href='#tf-service') Services
+                            li
+                                a(href='#tf-about') About
+
+        nav#tf-footer
+            .container
+                .pull-left
+                    p
+                        | 2017 © Plantino. All Rights Reserved.
+                        a(href='https://github.com/fabio92rz')  Fabio Rizzo
+                .pull-right
+                    ul.social-media.list-inline
+                        li
+                            a(href='#')
+                                span.fa.fa-facebook
+                        li
+                            a(href='#')
+                                span.fa.fa-twitter
+                        li
+                            a(href='#')
+                                span.fa.fa-pinterest
+                        li
+                            a(href='#')
+                                span.fa.fa-google-plus
+                        li
+                            a(href='#')
+                                span.fa.fa-dribbble
+                        li
+                            a(href='#')
+                                span.fa.fa-behance
+
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+        script(type='text/javascript', src='javascripts/jquery.1.11.1.js')
+        script(type='text/javascript', src='javascripts/bootstrap.js')
+        script(type='text/javascript', src='javascripts/main.js')
+        script(src='javascripts/sweetalert.min.js')
+        link(rel='stylesheet', href='stylesheets/sweetalert.css')
+
+        script.
+            var status = !{data};
+
+            if (status === "success") {
+
+                sweetAlert("Congratulazioni", "ora puoi effettuare il login!", "success");
+            }
+
+//
+   Created by Fabio on 29/03/2017.
+

@@ -43,7 +43,7 @@ router.post('/', function (req, res) {
 
         //console.log(db.query("SELECT * FROM user where mail = ? and password = ?",[mail, password], ['id', 'name', 'mail', 'password']));
 
-        if (userMail === loginMail && userPass === loginPassword){
+        if (userMail == loginMail && userPass == loginPassword){
 
             state = "success";
             res.render('home', {data: JSON.stringify(state)});
