@@ -53,12 +53,10 @@ html(lang='en')
                     #bs-example-navbar-collapse-1.collapse.navbar-collapse
                         ul.nav.navbar-nav.navbar-right
                             li
-                                a(href='#tf-home') Home
-                            li
-                                a(href='#tf-service') Services
-                            li
-                                a(href='#tf-about') About
-
+                                a(id="name")
+                                script.
+                                    var user = !{user};
+                                    document.getElementById("name").innerHTML = user;
         nav#tf-footer
             .container
                 .pull-left
@@ -94,12 +92,8 @@ html(lang='en')
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
 
         script.
-            var status = !{data};
+            var user = !{data};
 
-            if (status === "success") {
-
-                sweetAlert("Congratulazioni", "ora puoi effettuare il login!", "success");
-            }
 
 //
    Created by Fabio on 29/03/2017.

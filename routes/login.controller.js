@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var url = require('url');
+var userModel = require('./../models/user.model');
 var bcrypt = require('bcrypt-nodejs');
 
 //var User = require('../models/user.model');
@@ -35,18 +36,19 @@ router.post('/', function (req, res) {
         var userMail = userContent.mail;
         var userPass = userContent.password;
 
-        console.log("Username", userName);
-        console.log("Usermail", userMail);
-        console.log("Userpass", userPass);
-        console.log("Useris", userId);
-
 
         //console.log(db.query("SELECT * FROM user where mail = ? and password = ?",[mail, password], ['id', 'name', 'mail', 'password']));
 
         if (userMail == loginMail && userPass == loginPassword){
 
+            userModel.id = userId;
+            userModel.name = userName;
+            userModel.mail = userMail;
+
+            console.log("Username", userModel);
+
             state = "success";
-            res.render('home', {data: JSON.stringify(state)});
+            res.render('home',{user: JSON.stringify(userModel.name)});
 
         }else {
 

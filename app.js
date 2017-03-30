@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var register = require('./routes/register.controller');
 var login = require('./routes/login.controller');
+var user = require('./models/user.model.js');
 var home = require('./routes/home.controller');
 
 var app = express();
@@ -27,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/register', register);
 app.use('/login', login);
 app.use('/home', home);
