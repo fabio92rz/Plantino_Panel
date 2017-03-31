@@ -7,7 +7,8 @@ var router = express.Router();
 var user = {
         id: String,
         name: String,
-        mail: String
+        mail: String,
+        token: String
     };
 
 

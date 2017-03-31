@@ -13,7 +13,8 @@ db = dblite('/opt/plantinoServer/plantino_record.db');
 //var db = new sqlite3.Database('/opt/plantinoServer/plantino_record.db');
 router.get('/', function (req, res, next) {
     var userName = user.name;
-    console.log("prova", userName);
+    var token = user.token;
+    console.log("prova", token);
     res.render('home', {user: JSON.stringify(userName)} );
 });
 

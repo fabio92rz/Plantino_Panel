@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,7 +10,7 @@ var flash = require('connect-flash');
 var index = require('./routes/index');
 var register = require('./routes/register.controller');
 var login = require('./routes/login.controller');
-var user = require('./models/user.model.js');
+var userModel = require('./models/user.model.js');
 var home = require('./routes/home.controller');
 
 var app = express();
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({resave: true, saveUninitialized: true, secret:'plantino_app'}));
 
 app.use('/', index);
 app.use('/register', register);
