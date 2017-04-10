@@ -18,6 +18,13 @@ router.get('/', function (req, res, next) {
     res.render('home', {user: JSON.stringify(userName)} );
 });
 
+router.post('/', function (req, res, next) {
+    user.token = "";
+    console.log("prova user", user.token);
+    res.render('index')
+
+})
+
 
 
 module.exports = router;

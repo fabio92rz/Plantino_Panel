@@ -59,20 +59,22 @@ html(lang='en')
                             li
                                 a(id="logout", onclick="userLogout()") Logout
                                 script.
-                                     function userLogout() {
-                                         swal({
-                                                 title: "Are you sure?",
-                                                 text: "You will not be able to recover this imaginary file!",
-                                                 type: "warning",
-                                                 showCancelButton: true,
-                                                 confirmButtonColor: "#DD6B55",
-                                                 confirmButtonText: "Yes, delete it!",
-                                                 closeOnConfirm: false
-                                             },
-                                             function () {
-                                                 swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                                             });
-                                     }
+                                    function userLogout() {
+                                        swal({
+                                                title: "Do you want to Logout?",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "Yes!",
+                                                dedlineButtonText: "No..",
+                                                closeOnConfirm: false
+                                            },
+                                            function (isConfirm) {
+                                                if (isConfirm) {
+                                                    post('/home', {data: 'success'})
+                                                }
+                                            });
+                                    }
         nav#tf-footer
             .container
                 .pull-left
@@ -109,6 +111,31 @@ html(lang='en')
 
         script.
             var user = !{data};
+
+        script.
+            function post(path, params, method) {
+                method = method || "post"; // Set method to post by default if not specified.
+
+                // The rest of this code assumes you are not using a library.
+                // It can be made less wordy if you use one.
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+
+                        form.appendChild(hiddenField);
+                    }
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            }
 
 
 //
