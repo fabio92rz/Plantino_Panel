@@ -52,12 +52,12 @@ html(lang='en')
                     #bs-example-navbar-collapse-1.collapse.navbar-collapse
                         ul.nav.navbar-nav.navbar-right
                             li
-                                a(id="name")
+                                a(id="name", href="")
                                 script.
                                     var user = !{user};
                                     document.getElementById("name").innerHTML = user;
                             li
-                                a(id="logout", onclick="userLogout()") Logout
+                                a(id="logout", onclick="userLogout()", href="") Logout
                                 script.
                                     function userLogout() {
                                         swal({
@@ -75,6 +75,18 @@ html(lang='en')
                                                 }
                                             });
                                     }
+
+        li
+        a(id="plantName") Prova
+        li
+        img(src="/image.jpg")
+
+        form(method="post", enctype="multipart/form-data", action="/upload")
+            .form-group
+                input(type="file", name="file")
+            .form-group
+                input(type="submit", value="Submit")
+
         nav#tf-footer
             .container
                 .pull-left
@@ -114,10 +126,7 @@ html(lang='en')
 
         script.
             function post(path, params, method) {
-                method = method || "post"; // Set method to post by default if not specified.
-
-                // The rest of this code assumes you are not using a library.
-                // It can be made less wordy if you use one.
+                method = method || "post";
                 var form = document.createElement("form");
                 form.setAttribute("method", method);
                 form.setAttribute("action", path);
