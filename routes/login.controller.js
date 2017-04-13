@@ -52,6 +52,7 @@ router.post('/', function (req, res) {
 
             sess = req.session;
             userModel.token = sess.email = userModel.mail;
+            sess.admin = true;
 
             state = "success";
             res.render('home', {user: JSON.stringify(userModel.name)});

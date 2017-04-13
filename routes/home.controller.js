@@ -12,7 +12,6 @@ var fs = require('fs');
 //var User = require('../models/user.model');
 var dblite = require('dblite');
 db = dblite('/opt/plantinoServer/plantino_record.db');
-router.use(bodyParser({uploadDir:'./../plantImages'}));
 
 //var db = new sqlite3.Database('/opt/plantinoServer/plantino_record.db');
 router.get('/', function (req, res, next) {
@@ -20,8 +19,8 @@ router.get('/', function (req, res, next) {
     var token = user.token;
     console.log("prova", token);
 
-    if (token){
-        res.render('home', {user: JSON.stringify(userName)} );
+    if (req.session && req.session.email === token && req.session.admin){
+        res.redirect('/home', {user: JSON.stringify(userName)} );
     }else {
         res.redirect('/');
     }
@@ -30,15 +29,16 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     user.token = "";
     user.name = "";
+    req.session.destroy();
     console.log("prova user", user.token);
     res.render('index');
 
 });
 
-router.post('/upload', function (req, res){
-    var tempPath = req.files.file.path,
+router.post('/home', function (req, res){
+    var tempPath = req.file.path,
         targetPath = path.resolve('./../plantImages/image.jpg');
-    if (path.extname(req.files.file.name).toLowerCase() === '.jpg'){
+    if (path.extname(req.file.name).toLowerCase() === '.jpg'){
         fs.rename(tempPath, targetPath, function(err) {
             if (err) throw err;
             console.log("Upload effettuato");

@@ -77,15 +77,16 @@ html(lang='en')
                                     }
 
         li
-        a(id="plantName") Prova
+        .container
+            h3(id="plantName") Rosmarino
         li
-        img(src="/image.jpg")
+        img(src="image.jpg", style="width:290px;height:300px", alt="plantImage")
 
-        form(method="post", enctype="multipart/form-data", action="/upload")
+        form(method="post", enctype="multipart/form-data", action="/home")
             .form-group
-                input(type="file", name="file")
+                input(type="file", name="file", style="width:232px").btn.btn-primary.my-btn
             .form-group
-                input(type="submit", value="Submit")
+                input(type="submit", value="Upload", style="width:232px").btn.btn-primary.my-btn
 
         nav#tf-footer
             .container

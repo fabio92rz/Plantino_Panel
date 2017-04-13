@@ -170,8 +170,27 @@ a.btn.btn-primary.my-btn {
   letter-spacing: 1px;
   font-weight: 600;
 }
+input.btn.btn-primary.my-btn {
+  background: #2F937B;
+  border-color: transparent;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+input.btn {
+  transition: all 0.5s;
+}
 button.btn.btn-primary.my-btn:hover,
 a.btn.btn-primary.my-btn:hover{
+  background: #FFFFFF;
+  color: #2F937B;
+  border-color: transparent;
+}
+
+input.btn.btn-primary.my-btn:hover{
   background: #FFFFFF;
   color: #2F937B;
   border-color: transparent;

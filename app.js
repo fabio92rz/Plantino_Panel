@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({resave: true, saveUninitialized: true, secret:'plantino_app'}));
+app.use(bodyParser({uploadDir:'./plantImages/'}));
 
 app.use('/', index);
 app.use('/register', register);
