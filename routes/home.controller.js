@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
     console.log("prova", token);
 
     if (req.session && req.session.email === token && req.session.admin){
-        res.redirect('/home', {user: JSON.stringify(userName)} );
+        res.render('home', {user: JSON.stringify(userName)} );
     }else {
         res.redirect('/');
     }
@@ -35,7 +35,7 @@ router.post('/', function (req, res, next) {
 
 });
 
-router.post('/home', function (req, res){
+/**router.post('/home', function (req, res){
     var tempPath = req.file.path,
         targetPath = path.resolve('./../plantImages/image.jpg');
     if (path.extname(req.file.name).toLowerCase() === '.jpg'){
@@ -50,7 +50,7 @@ router.post('/home', function (req, res){
 
         });
     }
-});
+});**/
 
 router.get('/image.jpeg', function (req, res) {
     res.sendfile(path.resolve('./../plantImages/image.jpg'));
