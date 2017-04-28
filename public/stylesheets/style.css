@@ -18,10 +18,6 @@ body, html{
   vertical-align: top;
 }
 
-.container {
-  white-space: nowrap;
-}
-
 .vertical{
   vertical-align: middle;
 }
@@ -143,6 +139,11 @@ a:focus{
   line-height: 20px;
   color: #FFFFFF;
 }
+
+.navbar-icon-footer {
+  color: #FFFFFF;
+}
+
 
 .logo {
   font-family: 'Playball', cursive;

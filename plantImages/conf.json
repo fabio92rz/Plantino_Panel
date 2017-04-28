@@ -1,0 +1,36 @@
+{
+  "plants": {
+    "basil": {
+      "minTemperature": 2200,
+      "maxTemperature": 2600,
+      "minHumidity": 1,
+      "maxHumidity": 1,
+      "maxLight": 2,
+      "minLight": 3
+    },
+    "rosemary": {
+      "minTemperature": 2200,
+      "maxTemperature": 2600,
+      "minHumidity": 1,
+      "maxHumidity": 1,
+      "maxLight": 2,
+      "minLight": 3
+    },
+    "oregano": {
+      "minTemperature": 2200,
+      "maxTemperature": 2600,
+      "minHumidity": 1,
+      "maxHumidity": 1,
+      "maxLight": 2,
+      "minLight": 3
+    },
+    "sage": {
+      "minTemperature": 2200,
+      "maxTemperature": 2600,
+      "minHumidity": 1,
+      "maxHumidity": 1,
+      "maxLight": 2,
+      "minLight": 3
+    }
+  }
+}

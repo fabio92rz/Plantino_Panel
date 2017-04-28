@@ -18,8 +18,6 @@ router.get('/', function (req, res, next) {
 });
 
 var sess;
-
-
 router.post('/', function (req, res) {
 
 

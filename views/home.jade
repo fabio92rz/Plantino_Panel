@@ -29,6 +29,8 @@ html(lang='en')
         link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
+        script(type="text/javascript" src="javascripts/ui.spinner.js")
+        link(rel='stylesheet', type='text/css', href='stylesheets/ui.spinner.css')
 
         //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
         //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
@@ -47,11 +49,36 @@ html(lang='en')
                             span.icon-bar
                             span.icon-bar
                             span.icon-bar
-                        a.navbar-brand(href="" id="index") Plantino
-                        a.navbar-icon(href="#")
-                            span.fa.fa-cog
+                        a.navbar-brand(href="#" id="index") Plantino
                             script.
                                 document.getElementById("index").href = "http://" + ip;
+                        a.navbar-icon(onclick="$('#modal1').modal('show')")
+                            span.fa.fa-cog
+                            #modal1.modal.fade
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                span(aria-hidden='true') ×
+                                            h4.modal-title Impostazioni
+                                        .modal-body
+                                            p One fine body…
+                                            label(for='plants') Piante:
+                                            select#plants(name='plants', style='width=250px')
+                                                option(value='prova') Prova
+                                                option(value='prova2') Prova 2
+                                        .modal-footer
+                                            button.btn.btn-warning(type='button', data-dismiss='modal') Close
+                                            button.btn.btn-primary(type='button') Save changes
+                                        script.
+                                            var modal1 = $('#modal1');
+                                            $(modal1).find('.modal-title').html("ciao");
+
+                                            $(modal1).find('.modal-body').html();
+
+                                    // /.modal-content
+                                // /.modal-dialog
+                            // /.modal
 
                     #bs-example-navbar-collapse-1.collapse.navbar-collapse
                         ul.nav.navbar-nav.navbar-right
@@ -80,29 +107,31 @@ html(lang='en')
                                             });
                                     }
         .container
-            .inbl
-                .vertical
-                    .space
-                        h2(id="plantName") Rosmarino
-                        .space
-                            img(src="http://www.ikea.com/PIAimages/67423_PE181266_S5.JPG", style="width:290px;height:300px", alt="plantImage")
-                            form(method="post", enctype="multipart/form-data", action="/home")
-                                .form-group
-                                    input(type="file", name="file", style="width:250px").btn.btn-primary.my-btn
-                                .form-group
-                                    input(type="submit", value="Upload", style="width:250px").btn.btn-primary.my-btn
-            .inbl
-                .vertical
-                    .space
-                        h3(id="status") Stato di salute:
-                    .space
-                        h4(id="actualTemp") Temperatura dell'aria:
-                        h4(id="actualMoist") Umidità del terreno:
-                        h4(id="actualLight") Luce Solare:
-        .container
-            .space
+            .media
                 .inbl
-                    h2 Storico
+                    .vertical
+                        .space
+                            h2(id="plantName") Rosmarino
+                            .space
+                                img(src="http://www.ikea.com/PIAimages/67423_PE181266_S5.JPG", style="width:290px;height:300px", alt="plantImage")
+                                form(method="post", enctype="multipart/form-data", action="/home")
+                                    .form-group
+                                        input(type="file", name="file", style="width:250px").btn.btn-primary.my-btn
+                                    .form-group
+                                        input(type="submit", value="Upload", style="width:250px").btn.btn-primary.my-btn
+                .inbl
+                    .vertical
+                        .space
+                            h3(id="plantState") Stato di salute:
+                        .space
+                            h4(id="actualTemp") Temperatura dell'aria:
+                            h4(id="actualMoist") Umidità del terreno:
+                            h4(id="actualLight") Luce Solare:
+        .container
+            .media
+                .space
+                    .inbl
+                        h2 Storico
 
 
         nav#tf-footer
@@ -115,22 +144,22 @@ html(lang='en')
                 .pull-right
                     ul.social-media.list-inline
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-facebook
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-twitter
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-pinterest
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-google-plus
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-dribbble
                         li
-                            a(href='#')
+                            a.navbar-icon-footer(href='#')
                                 span.fa.fa-behance
 
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
