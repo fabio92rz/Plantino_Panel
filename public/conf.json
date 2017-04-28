@@ -1,6 +1,7 @@
 {
-  "plants": {
-    "basil": {
+  "plants": [
+    {
+      "plantName":"Basilico",
       "minTemperature": 2200,
       "maxTemperature": 2600,
       "minHumidity": 1,
@@ -8,7 +9,8 @@
       "maxLight": 2,
       "minLight": 3
     },
-    "rosemary": {
+    {
+      "plantName":"Origano",
       "minTemperature": 2200,
       "maxTemperature": 2600,
       "minHumidity": 1,
@@ -16,7 +18,8 @@
       "maxLight": 2,
       "minLight": 3
     },
-    "oregano": {
+    {
+      "plantName":"Rosmarino",
       "minTemperature": 2200,
       "maxTemperature": 2600,
       "minHumidity": 1,
@@ -24,7 +27,8 @@
       "maxLight": 2,
       "minLight": 3
     },
-    "sage": {
+    {
+      "plantName":"Salvia",
       "minTemperature": 2200,
       "maxTemperature": 2600,
       "minHumidity": 1,
@@ -32,5 +36,5 @@
       "maxLight": 2,
       "minLight": 3
     }
-  }
+  ]
 }

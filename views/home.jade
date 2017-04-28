@@ -29,14 +29,12 @@ html(lang='en')
         link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
-        script(type="text/javascript" src="javascripts/ui.spinner.js")
-        link(rel='stylesheet', type='text/css', href='stylesheets/ui.spinner.css')
+        script(type='text/javascript', src='javascripts/jquery-3.2.1.min.js')
 
         //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
         //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
         script.
             var ip = location.host;
-
     body
         #tf-home
             #sticky-anchor
@@ -52,29 +50,45 @@ html(lang='en')
                         a.navbar-brand(href="#" id="index") Plantino
                             script.
                                 document.getElementById("index").href = "http://" + ip;
-                        a.navbar-icon(onclick="$('#modal1').modal('show')")
+                        a.navbar-icon(onclick="optionPanel()")
                             span.fa.fa-cog
-                            #modal1.modal.fade
+                            #panelModal.modal.fade
+                                script.
+                                    function closeModal() {
+                                        var panelModal = $('#panelModal');
+                                        panelModal.modal('hide');
+                                    }
                                 .modal-dialog
                                     .modal-content
                                         .modal-header
-                                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                            button.close(type='button', aria-label='Close', onclick="closeModal()")
                                                 span(aria-hidden='true') ×
                                             h4.modal-title Impostazioni
                                         .modal-body
-                                            p One fine body…
-                                            label(for='plants') Piante:
-                                            select#plants(name='plants', style='width=250px')
-                                                option(value='prova') Prova
-                                                option(value='prova2') Prova 2
-                                        .modal-footer
-                                            button.btn.btn-warning(type='button', data-dismiss='modal') Close
-                                            button.btn.btn-primary(type='button') Save changes
-                                        script.
-                                            var modal1 = $('#modal1');
-                                            $(modal1).find('.modal-title').html("ciao");
+                                            label(for='plants') Selezione una Pianta:
+                                            select(id="plants")
+                                            script.
+                                                $(function () {
+                                                    $.getJSON('conf.json', function (data) {
+                                                        var select = document.getElementById("plants");
+                                                        var option = document.createElement("option");
 
-                                            $(modal1).find('.modal-body').html();
+                                                        $.each(data.plants, function (i, e) {
+                                                            console.log(e.plantName);
+                                                            select.options[select.options.length] = new Option(e.plantName);
+                                                        })
+                                                    })
+                                                });
+                                        .modal-footer
+                                            button.btn.btn-danger(type='button', onclick="closeModal()") Close
+                                            button.btn.btn-success(type='button') Save changes
+                                        script.
+                                            function optionPanel() {
+
+                                                var panelModal = $('#panelModal');
+                                                panelModal.modal('show');
+                                            }
+
 
                                     // /.modal-content
                                 // /.modal-dialog
@@ -162,7 +176,6 @@ html(lang='en')
                             a.navbar-icon-footer(href='#')
                                 span.fa.fa-behance
 
-        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
         script(type='text/javascript', src='javascripts/jquery.1.11.1.js')
         script(type='text/javascript', src='javascripts/bootstrap.js')
         script(type='text/javascript', src='javascripts/main.js')
@@ -171,7 +184,6 @@ html(lang='en')
 
         script.
             var user = !{data};
-
         script.
             function post(path, params, method) {
                 method = method || "post";
