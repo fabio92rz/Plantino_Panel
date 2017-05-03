@@ -78,7 +78,7 @@ router.post('/getPlant', function (req, res) {
         console.log(registeredPlant);
         console.log(plantContent);
 
-        if (plantContent.id == 1){
+        if (plantContent != null){
 
             db.query("UPDATE selectedPlant SET plantName = ?, minTemp = ?, maxTemp = ?, minHum = ?, maxHum = ?, minLight = ?, maxLight = ? WHERE id = ?", [selectedPlant, minTemp, maxTemp, minHum, maxHum, minLight, maxLight, 1]);
 
