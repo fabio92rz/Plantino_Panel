@@ -16,19 +16,6 @@ router.get('/', function (req, res, next) {
     res.render('register');
 });
 
-/**var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
- var xhr = new XMLHttpRequest;
-
- xhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200){
-        document.getElementsByTagName(state).innerhtml = xhr.responseText;
-    }
-
-    xhr.open("POST", "http://localhost:1024/register", true);
-    xhr.send();
-
-};**/
-
 router.post('/', function (req, res) {
 
     console.log("richiesta ricevuta");

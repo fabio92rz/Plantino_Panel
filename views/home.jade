@@ -30,7 +30,10 @@ html(lang='en')
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
         script(type='text/javascript', src='javascripts/modernizr.custom.js')
         script(type='text/javascript', src='javascripts/jquery-3.2.1.min.js')
-
+        script(type='text/javascript', src='javascripts/bootstrap.js')
+        script(type='text/javascript', src='javascripts/main.js')
+        script(src='javascripts/sweetalert.min.js')
+        link(rel='stylesheet', href='stylesheets/sweetalert.css')
         //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
         //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
         script.
@@ -50,59 +53,101 @@ html(lang='en')
                         a.navbar-brand(href="#" id="index") Plantino
                             script.
                                 document.getElementById("index").href = "http://" + ip;
-                        a.navbar-icon(onclick="optionPanel()")
+                        a.navbar-icon(onclick="openPanel()", type="button")
                             span.fa.fa-cog
-                            #panelModal.modal.fade
-                                script.
-                                    function closeModal() {
-                                        var panelModal = $('#panelModal');
-                                        panelModal.modal('hide');
-                                    }
+                            #panelModal.modal.fade(role='dialog')
                                 .modal-dialog
                                     .modal-content
                                         .modal-header
-                                            button.close(type='button', aria-label='Close', onclick="closeModal()")
-                                                span(aria-hidden='true') ×
+                                            button.close(type='button', aria-label='Close', onclick="closePanel()") ×
                                             h4.modal-title Impostazioni
                                         .modal-body
                                             label(for='plants') Selezione una Pianta:
+                                            .space
                                             select(id="plants")
-                                            script.
-                                                $(function () {
-                                                    $.getJSON('conf.json', function (data) {
-                                                        var select = document.getElementById("plants");
-                                                        var option = document.createElement("option");
-
-                                                        $.each(data.plants, function (i, e) {
-                                                            console.log(e.plantName);
-                                                            select.options[select.options.length] = new Option(e.plantName);
-                                                        })
-                                                    })
-                                                });
                                         .modal-footer
-                                            button.btn.btn-danger(type='button', onclick="closeModal()") Close
-                                            button.btn.btn-success(type='button') Save changes
-                                        script.
-                                            function optionPanel() {
+                                            button.btn.btn-primary(type='button', onclick="getSelectedPlant()") Save changes
+                                            script.
 
-                                                var panelModal = $('#panelModal');
-                                                panelModal.modal('show');
-                                            }
-
-
+                                            button.btn.btn-danger(type='button', onclick="closePanel()") Close
                                     // /.modal-content
                                 // /.modal-dialog
-                            // /.modal
+                            script.
+                                function openPanel() {
+                                        var modalPanel = $('#panelModal');
+                                        modalPanel.modal('show');
+                                };
+                            script.
+                                function closePanel() {
+                                        var modalPanel = $('#panelModal');
+                                        modalPanel.modal('hide');
+                                    };
+                            script.
+                                $(function getPlants() {
+                                    $.getJSON('conf.json', function (data) {
+                                        var select = document.getElementById("plants");
+                                        var option = document.createElement("option");
+                                        $.each(data.plants, function (i, e) {
+                                            console.log(e.plantName);
+                                            select.options[select.options.length] = new Option(e.plantName);
+                                        })
+                                    })
+                                });
+                            script.
+                                function getSelectedPlant() {
+                                    var e = document.getElementById("plants");
+                                    var selectedPlant = e.options[e.selectedIndex].value;
+                                    console.log(selectedPlant.toString());
+
+                                    $.getJSON('conf.json', function (data) {
+                                        $.each(data.plants, function (i, e){
+                                            if(e.plantName == selectedPlant ){
+
+                                                var minTemp = e.minTemperature;
+                                                var maxTemp = e.maxTemperature;
+                                                var minHum = e.minHumidity;
+                                                var maxHum = e.maxHumidity;
+                                                var minLight = e.minLight;
+                                                var maxLight = e.maxLight;
+
+                                                var xmlhttp = new XMLHttpRequest();
+                                                xmlhttp.open("POST", "http://192.168.1.107:1024/home/getPlant", true)
+
+                                                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                                                xmlhttp.send(JSON.stringify({
+                                                    plant: selectedPlant,
+                                                    minTemp: minTemp,
+                                                    maxTemp: maxTemp,
+                                                    minLight: minLight,
+                                                    maxLight: maxLight,
+                                                    minHum: minHum,
+                                                    maxHum: maxHum
+                                                }));
+
+                                                xmlhttp.onreadystatechange = function () {
+                                                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                                                        response = xmlhttp.responseText;
+                                                        if (response == "success") {
+                                                            swal("Preferenze cambiate!")
+                                                            closePanel();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
 
                     #bs-example-navbar-collapse-1.collapse.navbar-collapse
                         ul.nav.navbar-nav.navbar-right
                             li
-                                a(id="name", href="")
+                                a(id="name", href="#")
                                 script.
                                     var user = !{user};
                                     document.getElementById("name").innerHTML = user;
                             li
-                                a(id="logout", onclick="userLogout()", href="") Logout
+                                a(id="logout", onclick="userLogout()", href="#") Logout
                                 script.
                                     function userLogout() {
                                         swal({
@@ -128,7 +173,7 @@ html(lang='en')
                             h2(id="plantName") Rosmarino
                             .space
                                 img(src="http://www.ikea.com/PIAimages/67423_PE181266_S5.JPG", style="width:290px;height:300px", alt="plantImage")
-                                form(method="post", enctype="multipart/form-data", action="/home")
+                                form(method="post", enctype="multipart/form-data", action="/home/getImage")
                                     .form-group
                                         input(type="file", name="file", style="width:250px").btn.btn-primary.my-btn
                                     .form-group
@@ -175,12 +220,6 @@ html(lang='en')
                         li
                             a.navbar-icon-footer(href='#')
                                 span.fa.fa-behance
-
-        script(type='text/javascript', src='javascripts/jquery.1.11.1.js')
-        script(type='text/javascript', src='javascripts/bootstrap.js')
-        script(type='text/javascript', src='javascripts/main.js')
-        script(src='javascripts/sweetalert.min.js')
-        link(rel='stylesheet', href='stylesheets/sweetalert.css')
 
         script.
             var user = !{data};

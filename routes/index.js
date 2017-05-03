@@ -7,10 +7,8 @@ var user = require('./../models/user.model.js');
 router.get('/', function(req, res, next) {
 
     if (user.token){
-
         res.redirect('home');
     }else {
-
         res.render('index', { title: 'Plantino' });
     }
 });

@@ -6,12 +6,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-
 var index = require('./routes/index');
 var register = require('./routes/register.controller');
 var login = require('./routes/login.controller');
 var userModel = require('./models/user.model.js');
 var home = require('./routes/home.controller');
+var url = require('url');
 
 var app = express();
 
@@ -27,7 +27,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({resave: true, saveUninitialized: true, secret:'plantino_app'}));
-
 app.use('/', index);
 app.use('/register', register);
 app.use('/login', login);
