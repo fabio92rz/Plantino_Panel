@@ -45,10 +45,10 @@ router.get('/', function (req, res, next) {
                 plantData.plantMoist = moistSpec.moist;
                 plantData.plantLight = lightSpec.light;
 
-                console.log(JSON.stringify(plantSpec));
+                console.log(JSON.stringify(plantData));
 
                 if (req.session && req.session.email === token && req.session.admin){
-                    res.render('home', {user: JSON.stringify(userName), userPlant: JSON.stringify(plantSpec), plantSpec: JSON.stringify(plantData)});
+                    res.render('home', {user: JSON.stringify(userName), userPlant: JSON.stringify(plantSpec), plantData: JSON.stringify(plantData)});
                 }else {
                     res.redirect('/');
                 }
