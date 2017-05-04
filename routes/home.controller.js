@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var url = require('url');
 var user = require('./../models/user.model.js');
+var plantSpec = require('./../models/plant.model');
 var path = require('path');
 var fs = require('fs');
 
@@ -18,11 +19,43 @@ router.get('/', function (req, res, next) {
     var token = user.token;
     console.log("prova", token);
 
-    if (req.session && req.session.email === token && req.session.admin){
-        res.render('home', {user: JSON.stringify(userName)} );
-    }else {
-        res.redirect('/');
-    }
+    var plantData = {
+
+        plantTemp : String,
+        plantMoist : String,
+        plantLight : String
+    };
+
+    db.query("SELECT * FROM temperatures ORDER BY id DESC ", ['id', 'temperature'], function (err, rows) {
+
+        var jsonTemp = JSON.stringify(rows.length && rows[0]);
+        var tempSpec = JSON.parse(jsonTemp);
+
+        db.query("SELECT * FROM humiditys ORDER BY id DESC ", ['id', 'moist'], function (err, rows) {
+
+            var jsonMoist = JSON.stringify(rows.length && rows[0]);
+            var moistSpec = JSON.parse(jsonMoist);
+
+            db.query("SELECT * FROM sunlights ORDER BY id DESC ", ['id', 'light'], function (err, rows) {
+
+                var jsonLight = JSON.stringify(rows.length && rows[0]);
+                var lightSpec = JSON.parse(jsonLight);
+
+                plantData.plantTemp = tempSpec.temperature;
+                plantData.plantMoist = moistSpec.moist;
+                plantData.plantLight = lightSpec.light;
+
+                console.log(JSON.stringify(plantSpec));
+
+                if (req.session && req.session.email === token && req.session.admin){
+                    res.render('home', {user: JSON.stringify(userName), userPlant: JSON.stringify(plantSpec), plantSpec: JSON.stringify(plantData)});
+                }else {
+                    res.redirect('/');
+                }
+            });
+
+        });
+    });
 });
 
 router.post('/', function (req, res, next) {
@@ -65,6 +98,15 @@ router.post('/getPlant', function (req, res) {
     var maxHum = jsonPlant.maxHum;
     var minLight = jsonPlant.minLight;
     var maxLight = jsonPlant.maxLight;
+
+    plantSpec.name= selectedPlant;
+    plantSpec.minTemp = minTemp;
+    plantSpec.maxTemp = maxTemp;
+    plantSpec.minHum = minHum;
+    plantSpec.maxHum = maxHum;
+    plantSpec.minLight = minLight;
+    plantSpec.maxLight = maxLight;
+
 
     console.log(req.body);
 

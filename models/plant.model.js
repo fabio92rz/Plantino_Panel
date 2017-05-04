@@ -12,9 +12,8 @@ var plant = {
     minHum: String,
     maxHum: String,
     minLight: String,
-    maxLight: String,
-    status: String
+    maxLight: String
 };
 
 
-exports = user;
+exports = plant;

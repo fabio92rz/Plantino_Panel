@@ -21,7 +21,7 @@ html(lang='en')
         link(rel='apple-touch-icon', sizes='114x114', href='img/apple-touch-icon-114x114.png')
         // Bootstrap
         link(rel='stylesheet', type='text/css', href='stylesheets/bootstrap.css')
-        //link(rel='stylesheet', type='text/css', href='fonts/font-awesome/css/font-awesome.css')
+
         //
           Stylesheet
           ==================================================
@@ -34,10 +34,15 @@ html(lang='en')
         script(type='text/javascript', src='javascripts/main.js')
         script(src='javascripts/sweetalert.min.js')
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
-        //link(href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300', rel='stylesheet', type='text/css')
-        //link(href='http://fonts.googleapis.com/css?family=Playball', rel='stylesheet', type='text/css')
+
         script.
             var ip = location.host;
+
+        script.
+            var userPlant = !{userPlant};
+
+        script.
+            var plantData = !{plantData};
     body
         #tf-home
             #sticky-anchor
@@ -74,14 +79,14 @@ html(lang='en')
                                 // /.modal-dialog
                             script.
                                 function openPanel() {
-                                        var modalPanel = $('#panelModal');
-                                        modalPanel.modal('show');
+                                    var modalPanel = $('#panelModal');
+                                    modalPanel.modal('show');
                                 };
                             script.
                                 function closePanel() {
-                                        var modalPanel = $('#panelModal');
-                                        modalPanel.modal('hide');
-                                    };
+                                    var modalPanel = $('#panelModal');
+                                    modalPanel.modal('hide');
+                                };
                             script.
                                 $(function getPlants() {
                                     $.getJSON('conf.json', function (data) {
@@ -100,8 +105,8 @@ html(lang='en')
                                     console.log(selectedPlant.toString());
 
                                     $.getJSON('conf.json', function (data) {
-                                        $.each(data.plants, function (i, e){
-                                            if(e.plantName == selectedPlant ){
+                                        $.each(data.plants, function (i, e) {
+                                            if (e.plantName == selectedPlant) {
 
                                                 var minTemp = e.minTemperature;
                                                 var maxTemp = e.maxTemperature;
@@ -111,7 +116,7 @@ html(lang='en')
                                                 var maxLight = e.maxLight;
 
                                                 var xmlhttp = new XMLHttpRequest();
-                                                xmlhttp.open("POST", "http://192.168.1.107:1024/home/getPlant", true)
+                                                xmlhttp.open("POST", "http://" + ip + "/home/getPlant", true)
 
                                                 xmlhttp.setRequestHeader("Content-Type", "application/json");
                                                 xmlhttp.send(JSON.stringify({
@@ -130,6 +135,7 @@ html(lang='en')
                                                         response = xmlhttp.responseText;
                                                         if (response == "success") {
                                                             swal("Preferenze cambiate!")
+                                                            document.getElementById("plantName").innerHTML = e.plantName;
                                                             closePanel();
                                                         }
                                                     }
@@ -170,7 +176,9 @@ html(lang='en')
                 .inbl
                     .vertical
                         .space
-                            h2(id="plantName") Rosmarino
+                            h2(id="plantName")
+                            script.
+                                document.getElementById("plantName").innerHTML = userPlant.name;
                             .space
                                 img(src="http://www.ikea.com/PIAimages/67423_PE181266_S5.JPG", style="width:290px;height:300px", alt="plantImage")
                                 form(method="post", enctype="multipart/form-data", action="/home/getImage")
@@ -181,11 +189,28 @@ html(lang='en')
                 .inbl
                     .vertical
                         .space
-                            h3(id="plantState") Stato di salute:
-                        .space
-                            h4(id="actualTemp") Temperatura dell'aria:
-                            h4(id="actualMoist") Umidità del terreno:
-                            h4(id="actualLight") Luce Solare:
+                            .row
+                                h3(id="plantState") Stato di salute:
+                                .space
+                                    .row
+                                        h4(style="float: left") Temperatura dell'aria:
+                                        h4(id="actualTemp", style="float: right")
+                                            script.
+                                                console.log(plantData);
+                                                document.getElementById("actualTemp").innerHTML = "\u00A0" + plantData.plantTemp / 100 + "C°";
+                                    .row
+                                        h4(style="float: left") Umidità del terreno:
+                                        h4(id="actualMoist", style="float: right")
+                                            script.
+                                                document.getElementById("actualMoist").innerHTML = "\u00A0" + plantData.plantMoist / 100;
+                                    .row
+                                        h4(style="float: left") Luce Solare:
+                                        h4(id="actualLight", style="float: right")
+                                            script.
+                                                document.getElementById("actualLight").innerHTML = "\u00A0" + plantData.plantLight + "Lux";
+
+
+
         .container
             .media
                 .space

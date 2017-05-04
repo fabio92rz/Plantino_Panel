@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var url = require('url');
 var userModel = require('./../models/user.model');
+var plantSpec = require('./../models/plant.model');
 var bcrypt = require('bcrypt-nodejs');
 var session = require('express-session');
 
@@ -42,18 +43,35 @@ router.post('/', function (req, res) {
 
         if (userMail == loginMail && userPass == loginPassword) {
 
-            userModel.id = userId;
-            userModel.name = userName;
-            userModel.mail = userMail;
+            db.query("SELECT * FROM selectedPlant where id = '?' ", [1], ['id', 'plantName', 'minTemp', 'maxTemp', 'minHum', 'maxHum', 'minLight', 'maxLight'], function (err, rows) {
 
-            console.log("Username", userModel);
+                var registeredPlant = JSON.stringify(rows.length && rows[0]);
+                var plantContent = JSON.parse(registeredPlant);
 
-            sess = req.session;
-            userModel.token = sess.email = userModel.mail;
-            sess.admin = true;
+                plantSpec.name = plantContent.plantName;
+                plantSpec.minTemp = plantContent.minTemp;
+                plantSpec.maxTemp = plantContent.maxTemp;
+                plantSpec.minHum = plantContent.minHum;
+                plantSpec.maxHum = plantContent.maxHum;
+                plantSpec.minLight = plantContent.minLight;
+                plantSpec.maxLight = plantContent.maxLight;
 
-            state = "success";
-            res.render('home', {user: JSON.stringify(userModel.name)});
+                console.log(plantSpec);
+
+                userModel.id = userId;
+                userModel.name = userName;
+                userModel.mail = userMail;
+
+                console.log("Username", userModel);
+
+                sess = req.session;
+                userModel.token = sess.email = userModel.mail;
+                sess.admin = true;
+
+                state = "success";
+                res.render('home', {user: JSON.stringify(userModel.name), userPlant: JSON.stringify(plantSpec)});
+
+            });
 
         } else {
 
