@@ -32,6 +32,7 @@ html(lang='en')
         script(type='text/javascript', src='javascripts/jquery-3.2.1.min.js')
         script(type='text/javascript', src='javascripts/bootstrap.js')
         script(type='text/javascript', src='javascripts/main.js')
+        script(type = 'text/javascript', src='javascripts/Chart.js')
         script(src='javascripts/sweetalert.min.js')
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
 
@@ -216,7 +217,44 @@ html(lang='en')
                 .space
                     .inbl
                         h2 Storico
+                        .space
+                            canvas(id="tempChart", width="400", height="400")
+                                script.
 
+                                    var data = {
+                                        labels: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+                                        datasets: [
+                                            {
+                                                label: "Temperatura °C",
+                                                fill: false,
+                                                lineTension: 0.1,
+                                                backgroundColor: "rgba(75,192,192,0.4)",
+                                                borderColor: "rgba(75,192,192,1)",
+                                                borderCapStyle: 'butt',
+                                                borderDash: [],
+                                                pointStyle: 'circle',
+                                                borderDashOffset: 0.0,
+                                                borderJoinStyle: 'miter',
+                                                pointBorderColor: "rgba(75,192,192,1)",
+                                                pointBackgroundColor: "#fff",
+                                                pointBorderWidth: 1,
+                                                pointHoverRadius: 5,
+                                                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                                pointHoverBorderWidth: 2,
+                                                pointRadius: 1,
+                                                pointHitRadius: 10,
+                                                data: [12, 15, 20, 18, 25, 32],
+                                                spanGaps: false,
+                                            }
+                                        ]
+                                    };
+
+                                    var ctx = document.getElementById("tempChart");
+                                    var tempChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: data
+                                    });
 
         nav#tf-footer
             .container

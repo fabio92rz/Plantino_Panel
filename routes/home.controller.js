@@ -9,7 +9,6 @@ var plantSpec = require('./../models/plant.model');
 var path = require('path');
 var fs = require('fs');
 
-
 //var User = require('../models/user.model');
 var dblite = require('dblite');
 db = dblite('/opt/plantinoServer/plantino_record.db');
