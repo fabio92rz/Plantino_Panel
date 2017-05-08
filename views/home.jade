@@ -209,54 +209,61 @@ html(lang='en')
                                         h4(id="actualLight", style="float: right")
                                             script.
                                                 document.getElementById("actualLight").innerHTML = plantData.plantLight + "Lux";
-
-
-
         .container
             .media
                 .space
                     h2 Storico:
                     .space
-                    canvas(id="tempChart", width="1100", height="350")
-                        script.
-                            var data = {
-                                labels: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
-                                datasets: [
-                                    {
-                                        label: "Temperatura °C",
-                                        fill: false,
-                                        lineTension: 0.1,
-                                        backgroundColor: "rgba(250,10,10,0.4)",
-                                        borderColor: "rgba(250,10,10,1)",
-                                        borderCapStyle: 'butt',
-                                        borderDash: [],
-                                        pointStyle: 'circle',
-                                        borderDashOffset: 0.0,
-                                        borderJoinStyle: 'miter',
-                                        pointBorderColor: "rgba(250,10,10,1)",
-                                        pointBackgroundColor: "#fff",
-                                        pointBorderWidth: 1,
-                                        pointHoverRadius: 5,
-                                        pointHoverBackgroundColor: "rgba(250,10,10,1)",
-                                        pointHoverBorderColor: "rgba(250,10,10,1)",
-                                        pointHoverBorderWidth: 2,
-                                        pointRadius: 1,
-                                        pointHitRadius: 10,
-                                        data: [12, 15, 20, 18, 25, 32],
-                                        spanGaps: false
-                                    }
-                                ]
-                            };
+                        .tab
+                            button.tablinks(onclick='openTemperature()') Temperatura
+                            canvas.tab-content(id="tempChart", width="1100", height="350")
+                            script.
+                                function openTemperature() {
+                                    var tempGraph = !{tempGraph};
+                                    var tempTimeGraph = !{tempTimeGraph};
 
-                            var ctx = document.getElementById("tempChart");
-                            var tempChart = new Chart(ctx, {
-                                type: 'line',
-                                data: data
-                            });
+                                    var data = {
+                                        labels: tempTimeGraph,
+                                        datasets: [
+                                            {
+                                                label: "Temperatura °C",
+                                                fill: false,
+                                                lineTension: 0.1,
+                                                backgroundColor: "rgba(250,10,10,0.4)",
+                                                borderColor: "rgba(250,10,10,1)",
+                                                borderCapStyle: 'butt',
+                                                borderDash: [],
+                                                pointStyle: 'circle',
+                                                borderDashOffset: 0.0,
+                                                borderJoinStyle: 'miter',
+                                                pointBorderColor: "rgba(250,10,10,1)",
+                                                pointBackgroundColor: "#fff",
+                                                pointBorderWidth: 1,
+                                                pointHoverRadius: 5,
+                                                pointHoverBackgroundColor: "rgba(250,10,10,1)",
+                                                pointHoverBorderColor: "rgba(250,10,10,1)",
+                                                pointHoverBorderWidth: 2,
+                                                pointRadius: 1,
+                                                pointHitRadius: 10,
+                                                data: tempGraph,
+                                                spanGaps: false
+                                            }
+                                        ]
+                                    };
+
+                                    var ctx = document.getElementById("tempChart");
+                                    var tempChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: data
+                                    });
+                                }
                     canvas(id="moistChart", width="1100", height="350")
                         script.
+                            var moistGraph = !{moistGraph};
+                            var moistTimeGraph = !{moistTimeGraph};
+
                             var data = {
-                                labels: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+                                labels: moistTimeGraph,
                                 datasets: [
                                     {
                                         label: "Umidità",
@@ -278,7 +285,7 @@ html(lang='en')
                                         pointHoverBorderWidth: 2,
                                         pointRadius: 1,
                                         pointHitRadius: 10,
-                                        data: [12, 15, 20, 18, 25, 32],
+                                        data: moistGraph,
                                         spanGaps: false
                                     }
                                 ]
@@ -291,8 +298,11 @@ html(lang='en')
                             });
                     canvas(id="lightChart", width="1100", height="350")
                         script.
+                            var lightGraph = !{lightGraph};
+                            var lightTimeGraph = !{lightTimeGraph};
+
                             var data = {
-                                labels: ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+                                labels: lightTimeGraph,
                                 datasets: [
                                     {
                                         label: "Luce Solare",
@@ -314,7 +324,7 @@ html(lang='en')
                                         pointHoverBorderWidth: 2,
                                         pointRadius: 1,
                                         pointHitRadius: 10,
-                                        data: [12, 15, 20, 18, 25, 32],
+                                        data: lightGraph,
                                         spanGaps: false
                                     }
                                 ]

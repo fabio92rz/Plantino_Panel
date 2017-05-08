@@ -20,35 +20,75 @@ router.get('/', function (req, res, next) {
 
     var plantData = {
 
-        plantTemp : String,
-        plantMoist : String,
-        plantLight : String
+        plantTemp: String,
+        plantMoist: String,
+        plantLight: String,
+        moistTime: String,
+        lightTime: String
     };
 
-    db.query("SELECT * FROM temperatures ORDER BY id DESC ", ['id', 'temperature'], function (err, rows) {
+    var tempTimeGraph = [];
+    var tempGraph = [];
+    var moistTimeGraph = [];
+    var moistGraph = [];
+    var lightTimeGraph = [];
+    var lightGraph = [];
+
+    db.query("SELECT * FROM temperatures ORDER BY id DESC ", ['id', 'temperature', 'inserted_at'], function (err, rows) {
 
         var jsonTemp = JSON.stringify(rows.length && rows[0]);
         var tempSpec = JSON.parse(jsonTemp);
 
-        db.query("SELECT * FROM humiditys ORDER BY id DESC ", ['id', 'moist'], function (err, rows) {
+        for (var i = 0; i < rows.length; i++) {
+
+            tempGraph.push(rows[i].temperature/100);
+            tempTimeGraph.push(rows[i].inserted_at);
+        }
+
+
+        db.query("SELECT * FROM humiditys ORDER BY id DESC ", ['id', 'moist', 'inserted_at'], function (err, rows) {
 
             var jsonMoist = JSON.stringify(rows.length && rows[0]);
             var moistSpec = JSON.parse(jsonMoist);
 
-            db.query("SELECT * FROM sunlights ORDER BY id DESC ", ['id', 'light'], function (err, rows) {
+            for (var j = 0; j < rows.length; j++){
+
+                moistGraph.push(rows[j].moist/100);
+                moistTimeGraph.push(rows[j].inserted_at);
+            }
+
+            db.query("SELECT * FROM sunlights ORDER BY id DESC ", ['id', 'light', 'inserted_at'], function (err, rows) {
 
                 var jsonLight = JSON.stringify(rows.length && rows[0]);
                 var lightSpec = JSON.parse(jsonLight);
 
+                for (var k = 0; k < rows.length; k++){
+
+                    lightGraph.push(rows[k].light);
+                    lightTimeGraph.push(rows[k].inserted_at);
+                }
+
                 plantData.plantTemp = tempSpec.temperature;
                 plantData.plantMoist = moistSpec.moist;
+                plantData.moistTime = moistSpec.inserted_at;
                 plantData.plantLight = lightSpec.light;
+                plantData.lightTime = lightSpec.inserted_at;
 
-                console.log(JSON.stringify(plantData));
+                console.log(JSON.stringify(tempGraph));
 
-                if (req.session && req.session.email === token && req.session.admin){
-                    res.render('home', {user: JSON.stringify(userName), userPlant: JSON.stringify(plantSpec), plantData: JSON.stringify(plantData)});
-                }else {
+                if (req.session && req.session.email === token && req.session.admin) {
+                    res.render('home', {
+                        user: JSON.stringify(userName),
+                        userPlant: JSON.stringify(plantSpec),
+                        plantData: JSON.stringify(plantData),
+                        tempGraph: JSON.stringify(tempGraph),
+                        tempTimeGraph: JSON.stringify(tempTimeGraph),
+                        moistGraph: JSON.stringify(moistGraph),
+                        moistTimeGraph: JSON.stringify(moistTimeGraph),
+                        lightGraph: JSON.stringify(lightGraph),
+                        lightTimeGraph: JSON.stringify(lightTimeGraph)
+                    });
+                } else {
                     res.redirect('/');
                 }
             });
@@ -66,15 +106,15 @@ router.post('/', function (req, res, next) {
 
 });
 
-router.post('/getImage', function (req, res){
+router.post('/getImage', function (req, res) {
     var tempPath = req.file.path,
         targetPath = path.resolve('./../plantImages/image.jpg');
-    if (path.extname(req.file.name).toLowerCase() === '.jpg'){
-        fs.rename(tempPath, targetPath, function(err) {
+    if (path.extname(req.file.name).toLowerCase() === '.jpg') {
+        fs.rename(tempPath, targetPath, function (err) {
             if (err) throw err;
             console.log("Upload effettuato");
         });
-    }else{
+    } else {
         fs.unlink(tempPath, function () {
             if (err) throw err;
             console.error("Only .jpg accepted");
@@ -98,7 +138,7 @@ router.post('/getPlant', function (req, res) {
     var minLight = jsonPlant.minLight;
     var maxLight = jsonPlant.maxLight;
 
-    plantSpec.name= selectedPlant;
+    plantSpec.name = selectedPlant;
     plantSpec.minTemp = minTemp;
     plantSpec.maxTemp = maxTemp;
     plantSpec.minHum = minHum;
@@ -119,11 +159,11 @@ router.post('/getPlant', function (req, res) {
         console.log(registeredPlant);
         console.log(plantContent);
 
-        if (plantContent != null){
+        if (plantContent != null) {
 
             db.query("UPDATE selectedPlant SET plantName = ?, minTemp = ?, maxTemp = ?, minHum = ?, maxHum = ?, minLight = ?, maxLight = ? WHERE id = ?", [selectedPlant, minTemp, maxTemp, minHum, maxHum, minLight, maxLight, 1]);
 
-        }else {
+        } else {
 
             db.query("INSERT INTO selectedPlant (plantName, minTemp, maxTemp, minHum, maxHum, minLight, maxLight) VALUES (?, ?, ?, ?, ?, ?, ?)", [selectedPlant, minTemp, maxTemp, minHum, maxHum, minLight, maxLight]);
         }
