@@ -39,7 +39,7 @@ router.get('/', function (req, res, next) {
         var jsonTemp = JSON.stringify(rows.length && rows[0]);
         var tempSpec = JSON.parse(jsonTemp);
 
-        for (var i = 0; i < rows.length; i++) {
+        for (var i = rows.length-1; i >= 0; i--) {
 
             tempGraph.push(rows[i].temperature/100);
             tempTimeGraph.push(rows[i].inserted_at);
@@ -51,7 +51,7 @@ router.get('/', function (req, res, next) {
             var jsonMoist = JSON.stringify(rows.length && rows[0]);
             var moistSpec = JSON.parse(jsonMoist);
 
-            for (var j = 0; j < rows.length; j++){
+            for (var j = rows.length-1; j >= 0; j--){
 
                 moistGraph.push(rows[j].moist/100);
                 moistTimeGraph.push(rows[j].inserted_at);
@@ -62,7 +62,7 @@ router.get('/', function (req, res, next) {
                 var jsonLight = JSON.stringify(rows.length && rows[0]);
                 var lightSpec = JSON.parse(jsonLight);
 
-                for (var k = 0; k < rows.length; k++){
+                for (var k = rows.length-1; k >= 0; k--){
 
                     lightGraph.push(rows[k].light);
                     lightTimeGraph.push(rows[k].inserted_at);
@@ -89,7 +89,7 @@ router.get('/', function (req, res, next) {
                         lightTimeGraph: JSON.stringify(lightTimeGraph)
                     });
                 } else {
-                    res.redirect('/');
+                    res.render('/');
                 }
             });
 
