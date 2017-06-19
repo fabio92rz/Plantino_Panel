@@ -8,6 +8,35 @@ var user = require('./../models/user.model.js');
 var plantSpec = require('./../models/plant.model');
 var path = require('path');
 var fs = require('fs');
+var multer = require('multer');
+
+
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './../plantImages/');
+
+    },
+    filename: function (req, file, callback) {
+        callback(null, file + '-' + Date.now())
+    }
+});
+
+var upload = multer({ storage: storage}).single('plantPhoto');
+
+router.get('/getImage', function (req, res) {
+    res.sendfile(__dirname + "home.jade");
+
+});
+
+router.post('/postImage', function (req, res) {
+    upload(req, res, function (err) {
+        console.log(req.body);
+        if (err){
+            return res.end("Error uploading File.");
+        }
+        res.end("File is uploaded");
+    });
+});
 
 //var User = require('../models/user.model');
 var dblite = require('dblite');
@@ -104,27 +133,6 @@ router.post('/', function (req, res, next) {
     console.log("prova user", user.token);
     res.render('index');
 
-});
-
-router.post('/getImage', function (req, res) {
-    var tempPath = req.file.path,
-        targetPath = path.resolve('./../plantImages/image.jpg');
-    if (path.extname(req.file.name).toLowerCase() === '.jpg') {
-        fs.rename(tempPath, targetPath, function (err) {
-            if (err) throw err;
-            console.log("Upload effettuato");
-        });
-    } else {
-        fs.unlink(tempPath, function () {
-            if (err) throw err;
-            console.error("Only .jpg accepted");
-
-        });
-    }
-});
-
-router.get('/image.jpeg', function (req, res) {
-    res.sendfile(path.resolve('./../plantImages/image.jpg'));
 });
 
 router.post('/getPlant', function (req, res) {

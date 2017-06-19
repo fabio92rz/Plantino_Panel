@@ -34,6 +34,8 @@ html(lang='en')
         script(type='text/javascript', src='javascripts/main.js')
         script(type = 'text/javascript', src='javascripts/Chart.js')
         script(src='javascripts/sweetalert.min.js')
+        script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js")
+        script(src="http://malsup.github.com/jquery.form.js")
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
 
         script.
@@ -41,7 +43,91 @@ html(lang='en')
             var tempGraph = !{tempGraph};
             var tempTimeGraph = !{tempTimeGraph};
             var userPlant = !{userPlant};
+            var moistGraph = !{moistGraph};
+            var moistTimeGraph = !{moistTimeGraph};
+            var lightGraph = !{lightGraph};
+            var lightTimeGraph = !{lightTimeGraph};
             var ip = location.host;
+
+            var tempSet = [
+                {
+                    label: "Temperatura °C",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(250,10,10,0.4)",
+                    borderColor: "rgba(250,10,10,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    pointStyle: 'circle',
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(250,10,10,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(250,10,10,1)",
+                    pointHoverBorderColor: "rgba(250,10,10,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: tempGraph,
+                    spanGaps: false
+                }
+            ]
+
+            var moistSet = [
+                {
+                    label: "Umidità",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(5,5,255,0.4)",
+                    borderColor: "rgba(5,5,255,0.4)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    pointStyle: 'circle',
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(5,5,255,0.4)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(5,5,255,0.4)",
+                    pointHoverBorderColor: "rgba(5,5,255,0.4)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: moistGraph,
+                    spanGaps: false
+
+                }
+            ]
+
+            var lightSet = [
+                {
+                    label: "Luce Solare",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(255,255,0,0.4)",
+                    borderColor: "rgba(255,255,0,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    pointStyle: 'circle',
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(255,255,0,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(255,255,0,1)",
+                    pointHoverBorderColor: "rgba(255,255,0,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: lightGraph,
+                    spanGaps: false
+                }
+            ]
+
 
         script.
             $(document).ready(function () {
@@ -50,7 +136,6 @@ html(lang='en')
 
     body
         #tf-home
-            #sticky-anchor
             nav#tf-menu.navbar.navbar-default
                 .container
                     // Brand and toggle get grouped for better mobile display
@@ -150,7 +235,6 @@ html(lang='en')
                                         });
                                     });
                                 }
-
                     #bs-example-navbar-collapse-1.collapse.navbar-collapse
                         ul.nav.navbar-nav.navbar-right
                             li
@@ -186,36 +270,58 @@ html(lang='en')
                                 h2(id="plantName")
                                     script.
                                         document.getElementById("plantName").innerHTML = userPlant.name;
-                            .space
-                                img(src="http://www.ikea.com/PIAimages/67423_PE181266_S5.JPG", style="width:290px;height:300px", alt="plantImage")
-                                form(method="post", enctype="multipart/form-data", action="/home/getImage")
+
+                                form(enctype="multipart/form-data", action="/home/postImage", method="post")
                                     .form-group
-                                        input(type="file", name="file", style="width:250px").btn.btn-primary.my-btn
+                                        input(type="file", name="plantPhoto", style="width:250px").btn.btn-primary.my-btn
                                     .form-group
-                                        input(type="submit", value="Upload", style="width:250px").btn.btn-primary.my-btn
+                                        input(type="submit", value="Upload", style="width:250px", name= "submit").btn.btn-primary.my-btn
+                                        span(id = "status")
+
+                                script.
+                                    $(document).ready(function () {
+                                        $('#plantUpload').submit(function () {
+                                            $("#status").empty().text("File is uploading..");
+                                            $(this).ajaxSubmit({
+
+                                                error: function (xhr) {
+                                                    status('Error: ' + xhr.status);
+                                                },
+
+                                                success: function (response) {
+                                                    $("#status").empty().text(response);
+                                                    console.log(response);
+                                                }
+                                            });
+                                        return false;
+                                        });
+                                    });
+
                 .inbl
                     .vertical
                         .space
-                            .row
-                                .space
-                                    h3(id="plantState") Stato di salute:
-                                .space
-                                    .row
-                                        h4(style="float: left") Temperatura dell'aria:
-                                        h4(id="actualTemp", style="float: right")
-                                            script.
-                                                console.log(plantData);
-                                                document.getElementById("actualTemp").innerHTML = "\u00A0" + plantData.plantTemp / 100 + "C°";
-                                    .row
-                                        h4(style="float: left") Umidità del terreno:
-                                        h4(id="actualMoist", style="float: right")
-                                            script.
-                                                document.getElementById("actualMoist").innerHTML = plantData.plantMoist / 100;
-                                    .row
-                                        h4(style="float: left") Luce Solare:
-                                        h4(id="actualLight", style="float: right")
-                                            script.
-                                                document.getElementById("actualLight").innerHTML = plantData.plantLight + "Lux";
+                        .row
+                            h3(id="plantState", style="float: left") Stato di salute:
+
+                        .space
+                        .row
+                            h4(style="float: left") Temperatura dell'aria:
+                                h4(id="actualTemp", style="float: right")
+                                    script.
+                                        console.log(plantData);
+                                        document.getElementById("actualTemp").innerHTML = "\u00A0" + plantData.plantTemp / 100 + "C°";
+                        .row
+                            h4(style="float: left") Umidità del terreno:
+                            h4(id="actualMoist", style="float: right")
+                                script.
+                                    document.getElementById("actualMoist").innerHTML = plantData.plantMoist / 100;
+                        .row
+                            h4(style="float: left") Luce Solare:
+                            h4(id="actualLight", style="float: right")
+                                script.
+                                    document.getElementById("actualLight").innerHTML = plantData.plantLight + "Lux";
+
+
         .container
             .media
                 .space
@@ -223,16 +329,16 @@ html(lang='en')
                     .space
                         ul#rowTab.nav.nav-tabs
                             li.active
-                                a.tablinks.btn.btn-primary.my-btn(href='#temperatureChart', data-toggle='tab', onclick="openTemperature('temperatureChart')") Temperatura
+                                a.tablinks.btn.btn-primary.my-btn(href='#temperatureChart', data-toggle='tab', onclick="openChart('temperatureChart', tempTimeGraph, tempSet)") Temperatura
                             li
-                                a.tablinks.btn.btn-primary.my-btn(href='#moistChart', data-toggle='tab', onclick="openMoist('moistChart')") Umidità
+                                a.tablinks.btn.btn-primary.my-btn(href='#moistChart', data-toggle='tab', onclick="openChart('moistChart', moistTimeGraph, moistSet)") Umidità
                             li
-                                a.tablinks.btn.btn-primary.my-btn(href='#lightChart', data-toggle='tab', onclick="openLight('lightChart')") Luce Solare
+                                a.tablinks.btn.btn-primary.my-btn(href='#lightChart', data-toggle='tab', onclick="openChart('lightChart', lightTimeGraph, lightSet)") Luce Solare
 
                         canvas#temperatureChart.tab-pane.tabcontent.active(width="1100", height="350")
 
                         script.
-                            function openTemperature(stat) {
+                            function openChart(stat, xAxis, dataset) {
 
                                 var i, tabcontent, tablinks;
 
@@ -247,160 +353,20 @@ html(lang='en')
                                 }
 
                                 document.getElementById(stat).style.display = "block";
-
-                                var tempGraph = !{tempGraph};
-                                var tempTimeGraph = !{tempTimeGraph};
-
                                 var data = {
-                                    labels: tempTimeGraph,
-                                    datasets: [
-                                        {
-                                            label: "Temperatura °C",
-                                            fill: false,
-                                            lineTension: 0.1,
-                                            backgroundColor: "rgba(250,10,10,0.4)",
-                                            borderColor: "rgba(250,10,10,1)",
-                                            borderCapStyle: 'butt',
-                                            borderDash: [],
-                                            pointStyle: 'circle',
-                                            borderDashOffset: 0.0,
-                                            borderJoinStyle: 'miter',
-                                            pointBorderColor: "rgba(250,10,10,1)",
-                                            pointBackgroundColor: "#fff",
-                                            pointBorderWidth: 1,
-                                            pointHoverRadius: 5,
-                                            pointHoverBackgroundColor: "rgba(250,10,10,1)",
-                                            pointHoverBorderColor: "rgba(250,10,10,1)",
-                                            pointHoverBorderWidth: 2,
-                                            pointRadius: 1,
-                                            pointHitRadius: 10,
-                                            data: tempGraph,
-                                            spanGaps: false
-                                        }
-                                    ]
+                                    labels: xAxis,
+                                    datasets: dataset
                                 };
 
-                                var ctx = document.getElementById("temperatureChart");
-                                var temperatureChart = new Chart(ctx, {
+                                var ctx = document.getElementById(stat);
+                                var stat = new Chart(ctx, {
                                     type: 'line',
                                     data: data
                                 });
                             }
-
 
                         canvas#moistChart.tab-pane.tabcontent(width="1100", height="350")
-                        script.
-                            function openMoist(stat) {
-
-                                var i, tabcontent, tablinks;
-
-                                tabcontent = document.getElementsByClassName("tabcontent");
-                                for (i = 0; i < tabcontent.length; i++) {
-                                    tabcontent[i].style.display = "none";
-                                }
-
-                                tablinks = document.getElementsByClassName("tablinks");
-                                for (i = 0; i < tablinks.length; i++) {
-                                    tablinks[i].className = tablinks[i].className.replace("active", "");
-                                }
-
-                                document.getElementById(stat).style.display = "block";
-
-                                var moistGraph = !{moistGraph};
-                                var moistTimeGraph = !{moistTimeGraph};
-
-                                var data = {
-                                    labels: moistTimeGraph,
-                                    datasets: [
-                                        {
-                                            label: "Umidità",
-                                            fill: false,
-                                            lineTension: 0.1,
-                                            backgroundColor: "rgba(5,5,255,0.4)",
-                                            borderColor: "rgba(5,5,255,0.4)",
-                                            borderCapStyle: 'butt',
-                                            borderDash: [],
-                                            pointStyle: 'circle',
-                                            borderDashOffset: 0.0,
-                                            borderJoinStyle: 'miter',
-                                            pointBorderColor: "rgba(5,5,255,0.4)",
-                                            pointBackgroundColor: "#fff",
-                                            pointBorderWidth: 1,
-                                            pointHoverRadius: 5,
-                                            pointHoverBackgroundColor: "rgba(5,5,255,0.4)",
-                                            pointHoverBorderColor: "rgba(5,5,255,0.4)",
-                                            pointHoverBorderWidth: 2,
-                                            pointRadius: 1,
-                                            pointHitRadius: 10,
-                                            data: moistGraph,
-                                            spanGaps: false
-                                        }
-                                    ]
-                                };
-
-                                var ctx = document.getElementById("moistChart");
-                                var moistChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: data
-                                });
-                            }
-
                         canvas#lightChart.tab-pane.tabcontent(width="1100", height="350")
-                        script.
-                            function openLight(stat) {
-
-                                var i, tabcontent, tablinks;
-
-                                tabcontent = document.getElementsByClassName("tabcontent");
-                                for (i = 0; i < tabcontent.length; i++) {
-                                    tabcontent[i].style.display = "none";
-                                }
-
-                                tablinks = document.getElementsByClassName("tablinks");
-                                for (i = 0; i < tablinks.length; i++) {
-                                    tablinks[i].className = tablinks[i].className.replace("active", "");
-                                }
-
-                                document.getElementById(stat).style.display = "block";
-
-                                var lightGraph = !{lightGraph};
-                                var lightTimeGraph = !{lightTimeGraph};
-
-                                var data = {
-                                    labels: lightTimeGraph,
-                                    datasets: [
-                                        {
-                                            label: "Luce Solare",
-                                            fill: false,
-                                            lineTension: 0.1,
-                                            backgroundColor: "rgba(255,255,0,0.4)",
-                                            borderColor: "rgba(255,255,0,1)",
-                                            borderCapStyle: 'butt',
-                                            borderDash: [],
-                                            pointStyle: 'circle',
-                                            borderDashOffset: 0.0,
-                                            borderJoinStyle: 'miter',
-                                            pointBorderColor: "rgba(255,255,0,1)",
-                                            pointBackgroundColor: "#fff",
-                                            pointBorderWidth: 1,
-                                            pointHoverRadius: 5,
-                                            pointHoverBackgroundColor: "rgba(255,255,0,1)",
-                                            pointHoverBorderColor: "rgba(255,255,0,1)",
-                                            pointHoverBorderWidth: 2,
-                                            pointRadius: 1,
-                                            pointHitRadius: 10,
-                                            data: lightGraph,
-                                            spanGaps: false
-                                        }
-                                    ]
-                                };
-
-                                var ctx = document.getElementById("lightChart");
-                                var lightChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: data
-                                });
-                            }
 
         nav#tf-footer
             .container
