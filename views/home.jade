@@ -21,22 +21,22 @@ html(lang='en')
         link(rel='apple-touch-icon', sizes='114x114', href='img/apple-touch-icon-114x114.png')
         // Bootstrap
         link(rel='stylesheet', type='text/css', href='stylesheets/bootstrap.css')
+        link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+        link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
 
         //
           Stylesheet
           ==================================================
-        link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
-        link(rel='stylesheet', type='text/css', href='stylesheets/responsive.css')
-        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
-        script(type='text/javascript', src='javascripts/modernizr.custom.js')
+
         script(type='text/javascript', src='javascripts/jquery-3.2.1.min.js')
+        script(src="http://malsup.github.com/jquery.form.js")
+        script(type='text/javascript', src='javascripts/modernizr.custom.js')
         script(type='text/javascript', src='javascripts/bootstrap.js')
-        script(type='text/javascript', src='javascripts/main.js')
         script(type = 'text/javascript', src='javascripts/Chart.js')
         script(src='javascripts/sweetalert.min.js')
-        script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js")
-        script(src="http://malsup.github.com/jquery.form.js")
         link(rel='stylesheet', href='stylesheets/sweetalert.css')
+        link(rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css")
 
         script.
             var plantData = !{plantData};
@@ -148,13 +148,24 @@ html(lang='en')
                         a.navbar-brand(href="#" id="index") Plantino
                             script.
                                 document.getElementById("index").href = "http://" + ip;
-                        a.navbar-icon(onclick="openPanel()", type="button")
-                            span.fa.fa-cog
+
+                        script.
+                            function openPanel() {
+                                var modalPanel = $('#panelModal');
+                                modalPanel.modal('show');
+                            };
+                        script.
+                            function closePanel() {
+                                var modalPanel = $('#panelModal');
+                                modalPanel.modal('toggle');
+                            };
+                        a.navbar-icon(type="button")
+                            span.fa.fa-cog(onclick="openPanel()")
                             #panelModal.modal.fade(role='dialog')
                                 .modal-dialog
                                     .modal-content
                                         .modal-header
-                                            button.close(type='button', aria-label='Close', onclick="closePanel()") ×
+                                            button.close(type='button', class='close', data-dismiss="modal", aria-label='Close', onclick="closePanel()") ×
                                             h4.modal-title Impostazioni
                                         .modal-body
                                             label(for='plants') Selezione una Pianta:
@@ -162,22 +173,10 @@ html(lang='en')
                                             select(id="plants")
                                         .modal-footer
                                             button.btn.btn-primary(type='button', onclick="getSelectedPlant()") Save changes
-                                            script.
-
-                                            button.btn.btn-danger(onclick="closePanel()") Close
+                                            br
+                                            button.btn.btn-danger(type ='button', onclick="closePanel()") Close
                                     // /.modal-content
                                 // /.modal-dialog
-                            script.
-                                function openPanel() {
-                                    var modalPanel = $('#panelModal');
-                                    modalPanel.modal('show');
-                                };
-                            script.
-                                function closePanel() {
-                                    var modalPanel = $('#panelModal');
-                                    modalPanel.modal('hide');
-                                };
-
                             script.
                                 $(function getPlants() {
                                     $.getJSON('conf.json', function (data) {
@@ -270,6 +269,9 @@ html(lang='en')
                                 h2(id="plantName")
                                     script.
                                         document.getElementById("plantName").innerHTML = userPlant.name;
+
+                                br
+                                img(src="https://www.shoppingverde.it/385-thickbox_default/rosmarino-in-vaso.jpg", style="width:300px;height:300px;")
 
                                 form(enctype="multipart/form-data", action="/home/postImage", method="post")
                                     .form-group
@@ -375,29 +377,9 @@ html(lang='en')
                         | 2017 © Plantino. All Rights Reserved.
                         a(href='https://github.com/fabio92rz')
                             font(color='#ffffff')   Fabio Rizzo
-                .pull-right
-                    ul.social-media.list-inline
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-facebook
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-twitter
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-pinterest
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-google-plus
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-dribbble
-                        li
-                            a.navbar-icon-footer(href='#')
-                                span.fa.fa-behance
 
         script.
-            var user = !{data};
+            var user = !{data}
         script.
             function post(path, params, method) {
                 method = method || "post";
